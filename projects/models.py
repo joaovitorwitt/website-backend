@@ -9,6 +9,6 @@ class Projects(models.Model):
     project_image = models.ImageField(upload_to='project_images/', null=True, blank=True)
     project_title = models.CharField(max_length=255)
     project_description = models.TextField()
-
+    
     def __str__(self):
         return self.title

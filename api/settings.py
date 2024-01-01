@@ -98,9 +98,10 @@ while True:
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
-                'NAME': str(os.environ.get('DATABASE_NAME')),
+                'NAME': os.environ.get('DATABASE_NAME'),
                 'USER': os.environ.get('DATABASE_USER'),
-                'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+                # 'PASSWORD': str(os.environ.get('DATABASE_PASSWORD')),
+                'PASSWORD': '-4DfgdeGBDFDFg*d2eG2cCGF*6F2*bE2',
                 'HOST': os.environ.get('DATABASE_HOST'),
                 'PORT': os.environ.get('DATABASE_PORT')
             }

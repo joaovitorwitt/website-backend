@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,32 +89,33 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 
 
-print(os.environ.get("DATABASE_NAME"))
+DATABASES = {
+    'default': dj_database_url.parse("postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a/website_backend_0fvg")
+}
 
-# environment variable settings
+# while True:
+#     try:
+#         DATABASES = {
+#             'default': {
+#                 'ENGINE': 'django.db.backends.postgresql',
+#                 'NAME': os.environ.get('DATABASE_NAME'),
+#                 'USER': os.environ.get('DATABASE_USER'),
+#                 # 'PASSWORD': str(os.environ.get('DATABASE_PASSWORD')),
+#                 'PASSWORD': 'aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k',
+#                 'HOST': os.environ.get('DATABASE_HOST'),
+#                 'PORT': os.environ.get('DATABASE_PORT')
+#             }
+#         }
+
+#         print("Serving connection.....")
+#         print("Connection successful")
+#         break
+
+#     except Exception as error:
+#         print("Connection failed: ", str(error))
+#         time.sleep(7)
 
 
-while True:
-    try:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.environ.get('DATABASE_NAME'),
-                'USER': os.environ.get('DATABASE_USER'),
-                # 'PASSWORD': str(os.environ.get('DATABASE_PASSWORD')),
-                'PASSWORD': '-4DfgdeGBDFDFg*d2eG2cCGF*6F2*bE2',
-                'HOST': os.environ.get('DATABASE_HOST'),
-                'PORT': os.environ.get('DATABASE_PORT')
-            }
-        }
-
-        print("Serving connection.....")
-        print("Connection successful")
-        break
-
-    except Exception as error:
-        print("Connection failed: ", str(error))
-        time.sleep(7)
 
 
 # Password validation

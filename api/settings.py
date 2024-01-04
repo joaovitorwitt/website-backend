@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", "joaovitorwitt.com", "www.joaovitorwitt.com", "localhost:3000", "127.0.0.1"]
 
 
 # Application definition
@@ -60,7 +60,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
@@ -89,33 +92,32 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 
 
+
+while True:
+    try:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ.get('DATABASE_NAME'),
+                'USER': os.environ.get('DATABASE_USER'),
+                # 'PASSWORD': str(os.environ.get('DATABASE_PASSWORD')),
+                'PASSWORD': 'aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k',
+                'HOST': os.environ.get('DATABASE_HOST'),
+                'PORT': os.environ.get('DATABASE_PORT')
+            }
+        }
+
+        print("Serving connection.....")
+        print("Connection successful")
+        break
+
+    except Exception as error:
+        print("Connection failed: ", str(error))
+        time.sleep(7)
+
 DATABASES = {
-    'default': dj_database_url.parse("postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a/website_backend_0fvg")
+    'default': dj_database_url.parse("postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a.oregon-postgres.render.com/website_backend_0fvg")
 }
-
-# while True:
-#     try:
-#         DATABASES = {
-#             'default': {
-#                 'ENGINE': 'django.db.backends.postgresql',
-#                 'NAME': os.environ.get('DATABASE_NAME'),
-#                 'USER': os.environ.get('DATABASE_USER'),
-#                 # 'PASSWORD': str(os.environ.get('DATABASE_PASSWORD')),
-#                 'PASSWORD': 'aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k',
-#                 'HOST': os.environ.get('DATABASE_HOST'),
-#                 'PORT': os.environ.get('DATABASE_PORT')
-#             }
-#         }
-
-#         print("Serving connection.....")
-#         print("Connection successful")
-#         break
-
-#     except Exception as error:
-#         print("Connection failed: ", str(error))
-#         time.sleep(7)
-
-
 
 
 # Password validation
@@ -160,9 +162,23 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+STATIC_URL = 'static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+# HTTPS settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+
+# HSTS settings
+SECURE_HSTS_SECONDS = 31536000 # 1 year
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True

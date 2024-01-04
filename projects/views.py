@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from .models import Projects
 from .serializers import ProjectsSerializers
 
-
+import base64
 
 
 @api_view(['POST'])
@@ -35,7 +35,7 @@ def update_project(request, id):
         
         project_for_update.project_title = request.data["project_title"]
         project_for_update.project_description = request.data["project_description"]
-        project_for_update.project_image = request.data["project_image"]
+        project_for_update.project_image_url = request.data["project_image_url"]
 
         project_for_update.save()
 

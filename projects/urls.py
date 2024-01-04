@@ -1,5 +1,7 @@
 from django.urls import path, include
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("get/projects/", views.list_projects, name="list-projects"),
@@ -8,3 +10,4 @@ urlpatterns = [
     path("delete/project/<int:id>", views.delete_project, name="delete-project"),
     path("get/project/<int:id>", views.list_single_project, name="list-project")
 ]
+

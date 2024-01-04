@@ -10,12 +10,15 @@ from .models import Articles
 def create_article(request):
     try:
         article_data = request.data
+
         article_serializer = ArticleSerializer(data=article_data)
 
         if article_serializer.is_valid():
             article_serializer.save()
-            return Response({"message": "article created successfully"})
-
+            return Response({"message": "Article created successfully"})
+        
+        else:
+            return Response({"something went wrong": article_serializer.errors})
 
     except Exception as error:
         return Response({"something went wrong": str(error)})

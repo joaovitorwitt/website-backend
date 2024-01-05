@@ -167,7 +167,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3000", "https://www.joaovitorwitt.com", "https://joaovitorwitt.com", "https://portfolio-backend-fdxe.onrender.com"
 ]
 
 # HTTPS settings

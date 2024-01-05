@@ -18,9 +18,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 import time
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 
@@ -33,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", "joaovitorwitt.com", "www.joaovitorwitt.com", "localhost:3000", "127.0.0.1"]
+ALLOWED_HOSTS = ["*", "joaovitorwitt.com", "www.joaovitorwitt.com", "localhost:3000", "127.0.0.1", "https://portfolio-backend-fdxe.onrender.com"]
 
 
 # Application definition
@@ -116,7 +113,7 @@ while True:
         time.sleep(7)
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse("postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a.oregon-postgres.render.com/website_backend_0fvg")
 }
 
 

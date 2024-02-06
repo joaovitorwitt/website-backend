@@ -2,13 +2,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from system.views import ping
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('articles.urls')),
     path('api/v1/', include('projects.urls')),
     # add endpoint to make periodic requests
-    path('api/v1/ping', )
 ]
 
 if settings.DEBUG:

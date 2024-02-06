@@ -18,8 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 import time
-
-
+from datetime import timedelta
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -46,7 +45,8 @@ INSTALLED_APPS = [
     'articles',
     'projects',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'system'
 ]
 
 MIDDLEWARE = [
@@ -180,3 +180,11 @@ CORS_ALLOWED_ORIGINS = [
 # SECURE_HSTS_SECONDS = 31536000 # 1 year
 # SECURE_HSTS_PRELOAD = True
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+
+CELERY_BEAT_SCHEDULE = {
+    'call-ping-every-15-minutes': {
+        'task': 'your_app.tasks.call_ping_periodically',
+        'schedule': timedelta(minutes=15),
+    },
+}

@@ -1,13 +1,43 @@
+###############################################################################
+# Imports
+###############################################################################
 from django.shortcuts import render
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
 from .serializers import ArticleSerializer
 from .models import Articles
 
 
-# create articles
+###############################################################################
+# Implementation
+###############################################################################
 @api_view(['POST'])
 def create_article(request):
+    """
+    Creates an article instance.
+    This endpoint allows the creation of a new article by accepting a POST request with the necessary data in the request body.
+
+    Args:
+        thumbnail (str):
+            The string representing the image url for the article
+
+        title (str):
+            The title of the article
+        
+        description (str):
+            The description of the article
+
+        publish_date (Date):
+            The current datetime that the article is being published
+
+        content (str):
+            The actual content of the article
+
+    Returns:
+        Response: returns the response indicating whether or not the article creation was successfull 
+    """
     try:
         article_data = request.data
 

@@ -3,6 +3,7 @@
 ###############################################################################
 from django.shortcuts import render
 
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -45,10 +46,9 @@ def create_article(request):
 
         if article_serializer.is_valid():
             article_serializer.save()
-            return Response({"message": "Article created successfully"})
-        
+            return Response({"message": "Article created successfully"}, status=status.HTTP_200_OK)
         else:
-            return Response({"something went wrong": article_serializer.errors})
+            return Response({"error": "invalid data provided", "message": article_serializer.errors})
 
     except Exception as error:
         return Response({"something went wrong": str(error)})

@@ -10,9 +10,8 @@ from rest_framework.decorators import api_view
 from .serializers import ArticleSerializer
 from .models import Articles
 
-
 ###############################################################################
-# Implementation
+# Article creation implementation
 ###############################################################################
 @api_view(['POST'])
 def create_article(request):
@@ -48,15 +47,28 @@ def create_article(request):
             article_serializer.save()
             return Response({"message": "Article created successfully"}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "invalid data provided", "message": article_serializer.errors})
+            return Response({"error": "invalid data provided", "message": article_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     except Exception as error:
         return Response({"something went wrong": str(error)})
 
 
-# delete articles
+###############################################################################
+# Article deletion implementation
+###############################################################################
 @api_view(['DELETE'])
 def delete_article(request, id):
+    """
+    Endpoint to delete an article based on its unique ID.
+
+    Args:
+        id (int): The unique identifier of the article to be deleted.
+
+    Returns:
+        Response: A Response object indicating whether the article was successfully deleted.
+            If the article is successfully deleted, a message indicating the deletion is returned.
+            If an error occurs during the deletion process, an error message is returned.
+    """
     try:
         article_for_deletion = Articles.objects.get(id=id)
         article_for_deletion.delete()

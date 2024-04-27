@@ -100,5 +100,5 @@ class ArticleRetrieveTestCase(APITestCase):
     pass
 
 ###############################################################################
-# Article Creation TestCase Implementation
+# Article Update TestCase Implementation
 ###############################################################################

@@ -1,0 +1,10 @@
+# .coveragerc to control coverage.py
+[run]
+disable_warnings = no-data-collected
+
+[report]
+
+show_missing = True
+skip_empty = True
+
+

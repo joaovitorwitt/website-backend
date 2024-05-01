@@ -1,8 +1,6 @@
 ###############################################################################
 # Imports
 ###############################################################################
-from django.shortcuts import render
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -11,7 +9,7 @@ from .serializers import ArticleSerializer
 from .models import Articles
 
 ###############################################################################
-# Article creation implementation
+# Article Creation Implementation
 ###############################################################################
 @api_view(['POST'])
 def create_article(request):
@@ -52,9 +50,8 @@ def create_article(request):
     except Exception as error:
         return Response({"something went wrong": str(error)})
 
-
 ###############################################################################
-# Article deletion implementation
+# Article Deletion Implementation
 ###############################################################################
 @api_view(['DELETE'])
 def delete_article(request, id):
@@ -72,64 +69,91 @@ def delete_article(request, id):
     try:
         article_for_deletion = Articles.objects.get(id=id)
         article_for_deletion.delete()
-        return Response({"message": "article deleted"})
+        return Response({"message": "article deleted"}, status=status.HTTP_200_OK)
     
     except Exception as error:
-        return Response({"error": str(error)})
+        return Response({"error": str(error)}, status=status.HTTP_400_BAD_REQUEST)
 
-# update articles
+###############################################################################
+# Article Update Implementation
+###############################################################################
 @api_view(['PUT'])
 def update_article(request, id):
+    """
+    Sends a PUT request for the update of a specific article based on the ID
+
+    Args:
+        id (str):
+            The actual ID of the article that we want to update
+
+    Returns:
+        Response: indicating whether the update of the article was succesful or not
+
+    """
     try:
         article_for_update = Articles.objects.get(id=id)
 
-        # Update title if present in request data
         if "title" in request.data:
             article_for_update.title = request.data["title"]
 
-        # Update description if present in request data
         if "description" in request.data:
             article_for_update.description = request.data["description"]
 
-        # Update content if present in request data
         if "content" in request.data:
             article_for_update.content = request.data["content"]
 
-        # Update thumbnail if present in request data
         if "thumbnail" in request.data:
             article_for_update.thumbnail = request.data["thumbnail"]
 
         article_for_update.save()
 
-        return Response({"message": "article updated successfully"})
+        return Response({"message": "article updated successfully"}, status=status.HTTP_200_OK)
     
     except Articles.DoesNotExist:
-        return Response({"message": "Article not found"}, status=404)
+        return Response({"message": "Article not found"}, status=status.HTTP_404_NOT_FOUND)
     
     except Exception as error:
-        return Response({"something went wrong": str(error)})
+        return Response({"something went wrong": str(error)}, status=status.HTTP_400_BAD_REQUEST)
 
-
-# list single article
+###############################################################################
+# Article Retrieve Implementation
+###############################################################################
 @api_view(['GET'])
 def list_single_article(request, id):
+    """
+    Sends a GET request to the API to retrieve a single article based on the ID provided in the endpoint.
+
+    Args:
+        id: The corresponding ID for the article we want to retrieve
+
+    Returns:
+        Response: The response indicating whether the retrieve operation was successful or not
+    """
     try:
         article = Articles.objects.get(id=id)
         article_serializer = ArticleSerializer(article)
 
-        return Response({"article": article_serializer.data})
+        return Response({"message": "article retrieved successfully", "article": article_serializer.data}, status=status.HTTP_200_OK)
 
     except Exception as error:
-        return Response({"something went wrong": str(error)})
+        return Response({"error": "article could not be retrieved", "something went wrong": str(error)}, status=status.HTTP_400_BAD_REQUEST)
 
-
-# list all articles
+###############################################################################
+# Article List Implementation
+###############################################################################
 @api_view(['GET'])
 def list_articles(request):
+    """
+    Sends a GET request to the corresponding API endpoint that returns a list of articles in the database.
+
+    Returns:
+        Response: If the operation was successful, it returns the list of articles in a dictionary format.
+        otherwise raises a Bad Request error
+    """
     try:
         article_list = Articles.objects.all()
         article_list_serializer = ArticleSerializer(article_list, many=True)
-        return Response({"articles": article_list_serializer.data})
+        return Response({"articles": article_list_serializer.data}, status=status.HTTP_200_OK)
 
     except Exception as error:
-        return Response({"something went wrong": str(error)})
+        return Response({"something went wrong": str(error)}, status=status.HTTP_400_BAD_REQUEST)

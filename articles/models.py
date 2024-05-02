@@ -1,8 +1,12 @@
+###############################################################################
+# Imports
+###############################################################################
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
-# Create your models here.
-
+###############################################################################
+# Article Model Implementation
+###############################################################################
 class Articles(models.Model):
     class Meta:
         db_table = "Articles"
@@ -16,17 +20,4 @@ class Articles(models.Model):
     
     def __str__(self):
         return self.title
-    
 
-
-# class ContentImagesInsideArticles(models.Model):
-#     class Meta:
-#         db_table = "Article Images"
-
-
-#     article = models.ForeignKey(Articles, on_delete=models.CASCADE)
-#     images = models.CharField(max_length=255)
-#     short_description = models.CharField(max_length=255)
-
-#     def __str__(self):
-#         return f"Image for {self.title}"

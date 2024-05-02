@@ -1,8 +1,15 @@
-from django.urls import path, include
+###############################################################################
+# Imports
+###############################################################################
 from . import views
+
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+###############################################################################
+# URL Endpoints Implementations
+###############################################################################
 urlpatterns = [
     path("get/projects/", views.list_projects, name="list-projects"),
     path("create/project/", views.add_project, name="create-project"),

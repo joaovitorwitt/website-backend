@@ -18,7 +18,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import os
 import time
-from datetime import timedelta
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -45,8 +44,7 @@ INSTALLED_APPS = [
     'articles',
     'projects',
     'rest_framework',
-    'corsheaders',
-    'system'
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -90,7 +88,9 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 
 
-
+######################################################
+# this is not working
+######################################################
 while True:
     try:
         DATABASES = {
@@ -112,6 +112,9 @@ while True:
     except Exception as error:
         print("Connection failed: ", str(error))
         time.sleep(7)
+
+######################################################
+######################################################
 
 DATABASES = {
     'default': dj_database_url.parse("postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a.oregon-postgres.render.com/website_backend_0fvg")
@@ -182,9 +185,3 @@ CORS_ALLOWED_ORIGINS = [
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
-CELERY_BEAT_SCHEDULE = {
-    'call-ping-every-15-minutes': {
-        'task': 'your_app.tasks.call_ping_periodically',
-        'schedule': timedelta(minutes=15),
-    },
-}

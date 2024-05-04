@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'projects',
     'rest_framework',
     'corsheaders',
-    'system'
 ]
 
 MIDDLEWARE = [
@@ -175,9 +174,3 @@ CORS_ALLOWED_ORIGINS = [
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
-CELERY_BEAT_SCHEDULE = {
-    'call-ping-every-15-minutes': {
-        'task': 'your_app.tasks.call_ping_periodically',
-        'schedule': timedelta(minutes=15),
-    },
-}

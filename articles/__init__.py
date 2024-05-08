@@ -1,0 +1,1 @@
+from articles.tests.tests import ArticleCreationTestCase as ClientArticleCreationTestCase

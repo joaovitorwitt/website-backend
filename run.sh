@@ -3,6 +3,7 @@ PARAMS="${*:2}"
 
 case $1 in
     tests)
+    echo "Tests...."
 
     if [[ -z "${PARAMS}" ]]; then
         PARAMS="tests"
@@ -12,9 +13,29 @@ case $1 in
     pytest "${PARAMS}"
     ;;
 
+    coverage)
+    echo "Running...."
+
+    if [[ -z "${PARAMS}" ]]; then
+        PARAMS="coverage"
+    fi
+
+    coverage run "${PARAMS}"
+
+    ;;
+
+    server)
+
+    python manage.py runserver
+
+    ;;
+
     *)
         echo "Option not found, use one of these: coverage, tests"
         exit 1
     ;;
 
 esac
+
+
+# ./run.sh server

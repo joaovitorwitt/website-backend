@@ -8,39 +8,23 @@ from rest_framework.decorators import api_view
 from .serializers import ArticleSerializer
 from .models import Articles
 
+
 ###############################################################################
 # Article Creation Implementation
 ###############################################################################
 @api_view(['POST'])
 def create_article(request):
     """
-    Handle a POST request to create a new article in the database.
+    1st sends a POST request
+    data = {article data for creastion}
+    requests.post(url, data)
 
-    This function processes a POST request containing article data, validates this data using
-    a serializer, and if valid, saves the new article to the database. If the data is valid and
-    the article is successfully created, a success response is returned. If the data is invalid,
-    a detailed error response is provided. Any other exceptions triggered during the process
-    are also caught and returned as an error response.
-
-    Args:
-        request (HttpRequest): The request object containing the article data in the `data` attribute.
-            The expected keys in this data include:
-            - thumbnail (str): The URL of the thumbnail image for the article.
-            - title (str): The title of the article.
-            - description (str): A brief description of the article.
-            - publish_date (datetime): The publication date and time of the article.
-            - content (str): The full text content of the article.
-
-    Returns:
-        Response: A Response object with a JSON body that includes a success or error message.
-            Possible HTTP status codes include:
-            - 200 (HTTP_200_OK) if the article is successfully created, with a message "Article created successfully".
-            - 400 (HTTP_400_BAD_REQUEST) if the provided data is invalid, including details of the validation errors.
-            - 500 (HTTP_500_INTERNAL_SERVER_ERROR) for any other exceptions that occur during processing.
-
-    Raises:
-        Exception: Catches general exceptions that might occur during the article creation process,
-            particularly during data validation or database operations.
+    1st get the data that was passed to the url
+    2nd serialize the data
+    3rd check if the article data is valid
+    4th if it is valid we save to the database and return a success message
+    else return an error message 
+    
     """
     try:
         article_data = request.data

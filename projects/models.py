@@ -15,6 +15,7 @@ class Projects(models.Model):
     project_image_url = models.CharField(max_length=255)
     project_title = models.CharField(max_length=255)
     project_description = models.TextField()
+    project_link = models.TextField(default="No link")
     
     def __str__(self):
         return self.title

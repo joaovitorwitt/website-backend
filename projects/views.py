@@ -89,9 +89,17 @@ def update_project(request, id):
     try:
         project_for_update = Projects.objects.get(project_id=id)
         
-        project_for_update.project_title = request.data["project_title"]
-        project_for_update.project_description = request.data["project_description"]
-        project_for_update.project_image_url = request.data["project_image_url"]
+        if "project_title" in request.data:
+            project_for_update.project_title = request.data["project_title"]
+
+        if "project_description" in request.data:
+            project_for_update.project_description = request.data["project_description"]
+
+        if "project_image_url" in request.data:
+            project_for_update.project_image_url = request.data["project_image_url"]
+
+        if "project_link" in request.data:
+            project_for_update.project_link = request.data["project_link"]
 
         project_for_update.save()
 

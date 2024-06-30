@@ -30,6 +30,12 @@ case $1 in
 
     ;;
 
+    shell)
+
+    ipython
+
+    ;;
+
     *)
         echo "Option not found, use one of these: coverage, tests"
         exit 1

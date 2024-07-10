@@ -1,22 +1,16 @@
 ###############################################################################
 # Imports
 ###############################################################################
-import requests
-import os
-
-import dotenv
-from dotenv import load_dotenv
+import settings
 
 
-load_dotenv()
 ###############################################################################
 # Article Implementation
 ###############################################################################
 class Articles:
 
     def create(self):
-        return os.getenv("API_URL")
-
+        pass
 
     def delete(self):
         pass

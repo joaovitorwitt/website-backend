@@ -3,25 +3,15 @@
 ###############################################################################
 import settings
 
+from core.requests import Requests
 
 ###############################################################################
 # Article Implementation
 ###############################################################################
-class Articles:
+class Articles(Requests):
 
-    def create(self):
-        pass
+    def retrieve_article(self):
+        self.get()
 
-    def delete(self):
-        pass
-
-    def update(self):
-        pass
-
-    def list_single(self):
-        pass
-
-    def list_many(self):
-        pass
 
 

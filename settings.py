@@ -10,10 +10,12 @@ DATABASE_PORT='5432'
 
 
 
-PYTHON_VERSION=4
+
 
 
 API_URL = 'https://portfolio-backend-fdxe.onrender.com'
 DATABASE_URL= 'postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a.oregon-postgres.render.com/website_backend_0fvg'
 
 
+DEVELOPMENT_URL='https://websitefront-git-dev-joaovitorwitts-projects.vercel.app/'
+PRODUCTION_URL='https://joaovitorwitt.com'

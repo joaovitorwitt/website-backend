@@ -1,13 +1,17 @@
-class Requests(object):
 
-    def get():
+
+
+
+class Requests:
+
+    def get(self):
         pass
 
-    def post():
+    def post(self):
         pass
 
-    def put():
+    def put(self):
         pass
 
-    def delete():
+    def delete(self):
         pass

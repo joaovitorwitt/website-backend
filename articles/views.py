@@ -24,7 +24,6 @@ def create_article(request):
     3rd check if the article data is valid
     4th if it is valid we save to the database and return a success message
     else return an error message 
-    
     """
     try:
         article_data = request.data

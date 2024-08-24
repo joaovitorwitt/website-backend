@@ -1,4 +1,4 @@
-
+# pylint: disable=line-too-long
 
 
 # Database configuration
@@ -17,5 +17,13 @@ API_URL = 'https://portfolio-backend-fdxe.onrender.com'
 DATABASE_URL= 'postgres://website_backend_0fvg_user:aL7a9VkJTAXsEXJbMcs89hrY55k1Xd1k@dpg-cma3qpi1hbls73ci605g-a.oregon-postgres.render.com/website_backend_0fvg'
 
 
-DEVELOPMENT_URL='https://websitefront-git-dev-joaovitorwitts-projects.vercel.app/'
+FRONT_END_DEVELOPMENT_URL='https://websitefront-git-dev-joaovitorwitts-projects.vercel.app/'
 PRODUCTION_URL='https://joaovitorwitt.com'
+
+
+PYTHON_VERSION='3.11.7'
+
+
+HTTP_BAD_REQUEST = 400
+HTTP_OK_REQUEST = 200
+# TODO: implement other types of codes

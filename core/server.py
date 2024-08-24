@@ -1,6 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 HOST = ""
+PORT = 8080
 
 class MainHTTPHandler(BaseHTTPRequestHandler):
 

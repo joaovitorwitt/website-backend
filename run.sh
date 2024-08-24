@@ -1,5 +1,6 @@
 #!/bin/bash
 PARAMS="${*:2}"
+TESTS='tests/tests.py'
 
 case $1 in
     tests)

@@ -1,17 +1,19 @@
 #!/bin/bash
 PARAMS="${*:2}"
-TESTS='tests/tests.py'
+
+
+if [[ -z ${PARAMS} ]]; then
+    TESTS='tests.py'
+else
+    TESTS="${PARAMS}"
+fi
+
 
 case $1 in
     tests)
-    echo "Tests...."
-
-    if [[ -z "${PARAMS}" ]]; then
-        PARAMS="tests"
-    fi
 
     # run tests
-    pytest "${PARAMS}"
+    pytest "${TESTS}"
     ;;
 
     coverage)
@@ -41,8 +43,4 @@ case $1 in
         echo "Option not found, use one of these: coverage, tests"
         exit 1
     ;;
-
 esac
-
-
-# ./run.sh server

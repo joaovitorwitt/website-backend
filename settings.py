@@ -27,3 +27,9 @@ PYTHON_VERSION='3.11.7'
 HTTP_BAD_REQUEST = 400
 HTTP_OK_REQUEST = 200
 # TODO: implement other types of codes
+
+
+SINGULAR_CONVERTION_EXCEPTIONS = ('photo', 'piano', 'halo', 'volcano')
+
+IRREGULAR_NOUNS_SINGULAR = ('child', 'goose', 'man', 'woman', 'tooth', 'foot', 'mouse', 'people')
+IRREGULAR_NOUNS_PLURAL = ('children', 'geese', 'men', 'women', 'teeth', 'feet', 'mice', 'person')

@@ -132,6 +132,16 @@ class String:
                 return value
             
         raise ValueError('Something went wrong')
+    
+
+    def natural_day():
+        pass
+
+    def to_ordinal():
+        pass
+
+    def apnumber():
+        pass
 
 
 

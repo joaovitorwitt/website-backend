@@ -33,3 +33,5 @@ SINGULAR_CONVERTION_EXCEPTIONS = ('photo', 'piano', 'halo', 'volcano')
 
 IRREGULAR_NOUNS_SINGULAR = ('child', 'goose', 'man', 'woman', 'tooth', 'foot', 'mouse', 'people')
 IRREGULAR_NOUNS_PLURAL = ('children', 'geese', 'men', 'women', 'teeth', 'feet', 'mice', 'person')
+VOWELS = ('a', 'e', 'i', 'o', 'u')
+IMMUTABLE_PLURALS = ('sheep', 'series', 'species', 'deer')

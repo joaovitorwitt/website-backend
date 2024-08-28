@@ -1,5 +1,6 @@
-import settings
 from datetime import datetime
+
+import settings
 
 
 class String:
@@ -66,14 +67,39 @@ class String:
         """
         string = string.lower()
 
+        
+        if string in settings.IMMUTABLE_PLURALS:
+            return string
+
         if string in settings.IRREGULAR_NOUNS_PLURAL:
             string = cls._convert_irregular_plural_words(string)
-        
+
+        if string[-3:] == 'ies':
+            string = string[:-3] + 'y'
+
         if string[-2:] == 'es':
             string = string[:-2]
 
+        if string[-2:] == 'ys':
+            string = string[:-2] + 'y'
+
+        if string[-3:] == 'oes':
+            string = string[:-2]
+
+        if string[-2:] == 'os':
+            string = string[:-1]
+
         return string
-    
+
+
+    @classmethod
+    def pluralize(cls, string: str) -> str:
+
+        if string[-1] == 'y' and string[-2] in settings.VOWELS:
+            string += 's'
+
+        if string [-1] == 'y' and string[-2] not in settings.VOWELS:
+            string = string[:-1] + 'ies'
 
     @classmethod
     def _convert_irregular_plural_words(cls, word: str) -> str:
@@ -88,13 +114,11 @@ class String:
             str: The corresponding singular version.
         """
         # word = 'teeth' it needs to return tooth
-
-
         some_dict = {
             'teeth': 'tooth',
             'children': 'child',
-            'man': 'men',
-            'woman': 'women',
+            'men': 'man',
+            'women': 'woman',
             'person': 'people',
             'mouse': 'mice',
             'goose': 'geese'
@@ -106,6 +130,8 @@ class String:
         for key, value in some_dict.items():
             if word == key:
                 return value
+            
+        raise ValueError('Something went wrong')
 
 
 

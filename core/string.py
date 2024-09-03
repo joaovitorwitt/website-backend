@@ -43,104 +43,16 @@ class String:
         new_title = title.lower().strip().replace(' ', '-')
         return new_title
 
-    @classmethod
-    def singularize(cls, string: str) -> str:
-        """
-        This method takes a plural form of a string
-        and converts into its singular form
-
-        Args:
-            string (str): The string to be converted to singular
-
-        Returns:
-            str: The singularized string
-
-        Example:
-            >>> singularize('studies')
-            'study'
-
-            >>> singularize('watches')
-            'watch'
-
-            >>> singularize('computers')
-            'computer'
-        """
-        string = string.lower()
-
-        
-        if string in settings.IMMUTABLE_PLURALS:
-            return string
-
-        if string in settings.IRREGULAR_NOUNS_PLURAL:
-            string = cls._convert_irregular_plural_words(string)
-
-        if string[-3:] == 'ies':
-            string = string[:-3] + 'y'
-
-        if string[-2:] == 'es':
-            string = string[:-2]
-
-        if string[-2:] == 'ys':
-            string = string[:-2] + 'y'
-
-        if string[-3:] == 'oes':
-            string = string[:-2]
-
-        if string[-2:] == 'os':
-            string = string[:-1]
-
-        return string
-
-
-    @classmethod
-    def pluralize(cls, string: str) -> str:
-
-        if string[-1] == 'y' and string[-2] in settings.VOWELS:
-            string += 's'
-
-        if string [-1] == 'y' and string[-2] not in settings.VOWELS:
-            string = string[:-1] + 'ies'
-
-    @classmethod
-    def _convert_irregular_plural_words(cls, word: str) -> str:
-        """
-        This private method will be called when one of the irregular
-        nouns appear in the singularize method.
-
-        Args:
-            word (str): The irregular noun to be converted to singular.
-
-        Returns:
-            str: The corresponding singular version.
-        """
-        # word = 'teeth' it needs to return tooth
-        some_dict = {
-            'teeth': 'tooth',
-            'children': 'child',
-            'men': 'man',
-            'women': 'woman',
-            'person': 'people',
-            'mouse': 'mice',
-            'goose': 'geese'
-        }
-
-        # loop through this dictionary
-        # get the key correspoding
-
-        for key, value in some_dict.items():
-            if word == key:
-                return value
-            
-        raise ValueError('Something went wrong')
-    
 
     def natural_day():
+        # takes a date as argument 
+        # checks if the date is today
+        # checks if the date is yesterday
+        # checks if the date is tomorrow
+
         pass
 
     def to_ordinal():
-        pass
-
-    def apnumber():
         pass
 
 

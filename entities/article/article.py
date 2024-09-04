@@ -1,18 +1,20 @@
 
 from typing import Any
 from core.base import BaseEntity
-
+from core.string import String
+from core.criptography import generate_unique_id
 
 class Article(BaseEntity):
 
     def __init__(self, title: str, description: str, content: str, image_url: str) -> None: # pylint: disable=too-many-arguments
 
+        self.id = generate_unique_id()
         self.title = title
         self.description = description
         self._creation_time = 123
         self.content = content
         self.image_url = image_url
-        self.url_title = self._format_title_for_url(self.title)
+        self.url_title = String._format_title_for_url(self.title)
         super().__init__()
 
     def __repr__(self) -> str:
@@ -60,5 +62,8 @@ class Article(BaseEntity):
         Returns:
             Any: The element in the instance at the given index.
         """
-        # dont know if this is the best approach to extract
+        # dont know if this is the best approach to extract an element at a given index
         return list(self.__dict__.values())[position]
+    
+
+

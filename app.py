@@ -1,4 +1,9 @@
+import logging
+
 from flask import Flask
+from flask import request
+
+from entities.article.article import Article
 
 
 app = Flask(__name__)
@@ -10,7 +15,12 @@ def list_articles():
 
 @app.route("create/articles", methods=['POST'])
 def create_article():
-    pass
+    article_data = request.data
+
+    logging.info('article created')
+    return
+
+
 
 @app.route("delete/articles<id>")
 def delete_article(id: int):

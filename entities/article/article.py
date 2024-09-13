@@ -9,14 +9,13 @@ from core.fields import StringInput
 class Article(BaseEntity):
 
     def __init__(self, title: str, description: str, content: str, image_url: str) -> None: # pylint: disable=too-many-arguments
-
         self.id = generate_unique_id()
-        self.title = format_title_for_displaying(title)
-        self.description = StringInput(description)
+        self.title: str = format_title_for_displaying(title)
+        self.description : str = description
         self._creation_time = 123
-        self.content = content
-        self.image_url = image_url
-        self.url_title = format_title_for_url(self.title)
+        self.content: str = content
+        self.image_url: str = image_url
+        self.url_title: str = format_title_for_url(self.title)
         super().__init__()
 
     def __repr__(self) -> str:

@@ -29,7 +29,7 @@ case $1 in
 
     server)
 
-    python manage.py runserver
+    flask run
 
     ;;
 
@@ -40,7 +40,7 @@ case $1 in
     ;;
 
     *)
-        echo "Option not found, use one of these: coverage, tests"
+        echo "Option not found, use one of these: coverage, tests, shell, server"
         exit 1
     ;;
 esac

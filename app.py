@@ -1,36 +1,43 @@
 import logging
 
+
+
 from flask import Flask
 from flask import request
 
 from entities.article.article import Article
 
+import json
 
 app = Flask(__name__)
 
+log = logging.getLogger(__name__)
 
-@app.route("get/articles", methods=['GET'])
+
+@app.route("/get/articles", methods=['GET'])
 def list_articles():
     pass
 
-@app.route("create/articles", methods=['POST'])
+@app.route("/create/article", methods=['POST'])
 def create_article():
-    article_data = request.data
+    article_data = request.get_json()
 
-    logging.info('article created')
-    return
-
+    article = Article(title=article_data['title'], description=article_data['description'], content=article_data['content'], image_url=article_data['image_url'])
 
 
-@app.route("delete/articles<id>")
+    return json.dumps(article.__dict__) # return a status code 200 and a message indicating that the article was created
+
+
+
+@app.route("/delete/articles<id>")
 def delete_article(id: int):
     pass
 
-@app.route("update/article/<id>")
+@app.route("/update/article/<id>")
 def update_article(id: int):
     pass
 
-@app.route("get/article/<id>")
+@app.route("/get/article/<id>")
 def list_single_articles(id: int):
     pass
 

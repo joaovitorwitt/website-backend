@@ -1,13 +1,12 @@
+import json
+
 import logging
-
-
 
 from flask import Flask
 from flask import request
 
 from entities.article.article import Article
 
-import json
 
 app = Flask(__name__)
 
@@ -22,10 +21,15 @@ def list_articles():
 def create_article():
     article_data = request.get_json()
 
-    article = Article(title=article_data['title'], description=article_data['description'], content=article_data['content'], image_url=article_data['image_url'])
+    article = Article(
+        title=article_data['title'],
+        description=article_data['description'],
+        content=article_data['content'],
+        image_url=article_data['image_url']
+    )
 
-
-    return json.dumps(article.__dict__) # return a status code 200 and a message indicating that the article was created
+    # return a status code 200 and a message indicating that the article was created
+    return json.dumps(article.__dict__)
 
 
 
@@ -40,5 +44,3 @@ def update_article(id: int):
 @app.route("/get/article/<id>")
 def list_single_articles(id: int):
     pass
-
-

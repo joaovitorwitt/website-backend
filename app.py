@@ -1,15 +1,18 @@
-import json
-
 import logging
 
 from flask import Flask
 from flask import request
 
-from entities.article.article import Article
+import settings
+
+from core.serialize import dumps
+
+from entities.article import Article
 
 
 app = Flask(__name__)
 
+# fix this
 log = logging.getLogger(__name__)
 
 
@@ -28,8 +31,14 @@ def create_article():
         image_url=article_data['image_url']
     )
 
+    out = {
+        'response': 'ok',
+        'status_code': settings.HTTP_OK_REQUEST
+    }
+
     # return a status code 200 and a message indicating that the article was created
-    return json.dumps(article.__dict__)
+    # json.dumps(article.__dict__)
+    return out
 
 
 

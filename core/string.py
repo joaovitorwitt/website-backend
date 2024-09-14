@@ -63,3 +63,8 @@ def format_title_for_displaying(title: str) -> str:
         new_list.append(word)
 
     return ' '.join(new_list)
+
+
+def format_date(date: datetime) -> str:
+    to_string = date.strftime('%Y%m%d T%H:%M:%S')
+    return to_string

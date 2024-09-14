@@ -1,18 +1,18 @@
 
+from datetime import datetime
+
 from typing import Any
 from core.base import BaseEntity
-from core.string import format_title_for_displaying, format_title_for_url
+from core.string import format_title_for_displaying, format_title_for_url, format_date
 from core.criptography import generate_unique_id
-
-from core.fields import StringInput
 
 class Article(BaseEntity):
 
-    def __init__(self, title: str, description: str, content: str, image_url: str) -> None: # pylint: disable=too-many-arguments
+    def __init__(self, title: str, description: str, content: str, image_url: str, **kwargs) -> None: # pylint: disable=too-many-arguments
         self.id = generate_unique_id()
         self.title: str = format_title_for_displaying(title)
         self.description : str = description
-        self._creation_time = 123
+        self.creation_time = format_date(datetime.now())
         self.content: str = content
         self.image_url: str = image_url
         self.url_title: str = format_title_for_url(self.title)
@@ -27,7 +27,7 @@ class Article(BaseEntity):
         Returns:
             str: The string representation of the class
         """
-        return 'Article(%r, %r, %r, %r, %r, %r)' % (self.title, self.description, self._creation_time, self.content, self.image_url, self.url_title) # pylint: disable=consider-using-f-string, line-too-long
+        return 'Article(%r, %r, %r, %r, %r, %r)' % (self.title, self.description, self.creation_time, self.content, self.image_url, self.url_title) # pylint: disable=consider-using-f-string, line-too-long
 
     def __str__(self) -> str:
         """

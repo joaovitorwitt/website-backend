@@ -3,6 +3,7 @@
 
 class BaseEntity:
 
+    # TODO implement magic methods here
     # these methods below will send a request based on the operation
     def save(self):
         pass

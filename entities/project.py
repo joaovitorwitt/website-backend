@@ -1,7 +1,7 @@
 
 from core.base import BaseEntity
 from core.criptography import generate_unique_id
-from core.string import String
+# from core.string import String
 
 
 class Project(BaseEntity):
@@ -13,7 +13,7 @@ class Project(BaseEntity):
         self.description = description
         self.project_link = project_link
         self.image_url = image_url
-        self.title_for_url = String._format_title_for_url(title)
+        self.title_for_url = title
         super().__init__()
 
 

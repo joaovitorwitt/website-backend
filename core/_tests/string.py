@@ -1,7 +1,7 @@
 # pylint: disable=protected-access, line-too-long
 import unittest
 from unittest import TestCase
-from entities.article.article import Article
+from entities.article import Article
 
 from core.string import format_title_for_displaying, format_title_for_url
 

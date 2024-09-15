@@ -1,0 +1,5 @@
+Configure endpoints
+
+implement datetime test cases
+
+implement retrieve_single() and retrieve_many() on base entity

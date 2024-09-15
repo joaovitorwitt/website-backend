@@ -67,7 +67,3 @@ def list_project(id: int):
 @app.route('/create/project', methods=['POST'])
 def create_project():
     pass
-
-
-
-

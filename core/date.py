@@ -15,5 +15,3 @@ class DateTime(datetime):
         to_string = date.strftime('%Y%m%d T%H:%M:%S')
         return to_string
     
-
-    

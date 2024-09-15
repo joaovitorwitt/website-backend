@@ -5,9 +5,11 @@ from flask import request
 
 import settings
 
-from core.serialize import dumps
-
 from entities.article import Article
+
+from entities.base import BaseEntity
+
+import psycopg
 
 
 app = Flask(__name__)
@@ -40,8 +42,6 @@ def create_article():
     # json.dumps(article.__dict__)
     return out
 
-
-
 @app.route("/delete/articles<id>")
 def delete_article(id: int):
     pass
@@ -53,3 +53,21 @@ def update_article(id: int):
 @app.route("/get/article/<id>")
 def list_single_articles(id: int):
     pass
+
+
+# project endpoints
+@app.route('/get/projects', methods=['GET'])
+def list_projects():
+    pass
+
+@app.route('/get/project/<id>', methods=['GET'])
+def list_project(id: int):
+    pass
+
+@app.route('/create/project', methods=['POST'])
+def create_project():
+    pass
+
+
+
+

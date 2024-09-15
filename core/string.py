@@ -1,9 +1,8 @@
-from datetime import datetime
+from core.date import DateTime
 
 
 
-
-def normalize_date() -> str:
+def normalize_date(date: DateTime) -> str:
     """
     This method is used when to extract a normalized format
     for object instances. 
@@ -15,10 +14,9 @@ def normalize_date() -> str:
         >>> normalize_date()
         'August 12, 2024'
     """
-    current_date = datetime.now()
-    month = current_date.strftime('%B')
-    day = current_date.day
-    year = current_date.year
+    month = date.strftime('%B')
+    day = date.day
+    year = date.year
     return f'{month} {day}, {year}'
 
 def format_title_for_url(title: str) -> str:
@@ -63,8 +61,3 @@ def format_title_for_displaying(title: str) -> str:
         new_list.append(word)
 
     return ' '.join(new_list)
-
-
-def format_date(date: datetime) -> str:
-    to_string = date.strftime('%Y%m%d T%H:%M:%S')
-    return to_string

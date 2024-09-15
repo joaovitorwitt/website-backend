@@ -1,9 +1,10 @@
 # pylint: disable=protected-access, line-too-long
 import unittest
-from unittest import TestCase
+from unittest import TestCase, mock
 from entities.article import Article
 
-from core.string import format_title_for_displaying, format_title_for_url
+from core.string import format_title_for_displaying, format_title_for_url, normalize_date
+from core.date import DateTime
 
 
 class StringTestCase(TestCase):
@@ -25,7 +26,14 @@ class StringTestCase(TestCase):
         self.assertEqual(article.__dict__['title'], 'The Myth Of The 10x Developer')
 
     def test_normalize_date(self):
-        pass
+        expected_data = "October 16, 2024"
+
+        with mock.patch('core.date.DateTime.now') as mock_now:
+            mock_now.return_value = DateTime(2024, 10, 16)
+            result = normalize_date(mock_now.return_value)
+
+        self.assertEqual(result, expected_data)
+        
 
 if __name__ == "__main__":
     unittest.main()

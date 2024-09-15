@@ -1,5 +1,5 @@
 
-from core.base import BaseEntity
+from entities.base import BaseEntity
 from core.criptography import generate_unique_id
 # from core.string import String
 

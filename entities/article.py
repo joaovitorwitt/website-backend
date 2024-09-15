@@ -1,18 +1,20 @@
 
-from datetime import datetime
 
 from typing import Any
-from core.base import BaseEntity
-from core.string import format_title_for_displaying, format_title_for_url, format_date
+from entities.base import BaseEntity
+from core.string import format_title_for_displaying, format_title_for_url, normalize_date
 from core.criptography import generate_unique_id
 
-class Article(BaseEntity):
+from core.date import DateTime
 
-    def __init__(self, title: str, description: str, content: str, image_url: str, **kwargs) -> None: # pylint: disable=too-many-arguments
+class Article(BaseEntity): # pylint: disable=too-many-instance-attributes
+
+    def __init__(self, title: str, description: str, content: str, image_url: str, **kwargs) -> None: # pylint: disable=too-many-arguments, unused-argument
         self.id = generate_unique_id()
         self.title: str = format_title_for_displaying(title)
         self.description : str = description
-        self.creation_time = format_date(datetime.now())
+        self.creation_time = DateTime.stringfy_date(DateTime.now())
+        self.date = normalize_date(DateTime.now())
         self.content: str = content
         self.image_url: str = image_url
         self.url_title: str = format_title_for_url(self.title)

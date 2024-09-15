@@ -1,7 +1,11 @@
 import uuid
 
+from core.date import DateTime
+
 import unittest
 from unittest import TestCase, mock
+
+from unittest.mock import MagicMock
 
 from core.serialize import dumps, loads
 from entities.article import Article
@@ -25,11 +29,14 @@ class SerializeTestCase(TestCase):
         self.assertEqual(result, expected_data)
 
     def test_dumps_with_entity(self):
-        expected_data = '{"id": "553ef2c44d814982a0ce77e6264113c5", "title": "Something", "description": "description", "creation_time": 123, "content": "content", "image_url": "https://example.com", "url_title": "something"}'
+        expected_data = '{"id": "553ef2c44d814982a0ce77e6264113c5", "title": "Something", "description": "description", "creation_time": "20240815 T11:09:15", "date": "August 15, 2024", "content": "content", "image_url": "https://example.com", "url_title": "something"}'
 
-        with mock.patch('uuid.uuid4') as mock_id:
+        with mock.patch('uuid.uuid4') as mock_id, \
+            mock.patch('core.date.DateTime.now') as mock_date:
+            mock_date.return_value = DateTime(2024, 8, 15, 11, 9, 15, 15659)
             mock_id.return_value = uuid.UUID('553ef2c4-4d81-4982-a0ce-77e6264113c5')
             article = Article(title='something', description='description', content='content', image_url='https://example.com')
+
             result = dumps(article.__dict__)
 
         self.assertEqual(result, expected_data)
@@ -71,9 +78,11 @@ class SerializeTestCase(TestCase):
 
 
     def test_loads_with_entity(self):
-        expected_data = {'id': '553ef2c44d814982a0ce77e6264113c5', 'title': 'Title', 'description': 'description', 'creation_time': 123, 'content': 'content', 'image_url': 'https://example.com', 'url_title': 'title'}
+        expected_data = {'id': '553ef2c44d814982a0ce77e6264113c5', 'title': 'Title', 'description': 'description', 'creation_time': '20240915 T11:09:15', 'date': 'September 15, 2024', 'content': 'content', 'image_url': 'https://example.com', 'url_title': 'title'}
 
-        with mock.patch('uuid.uuid4') as mock_id:
+        with mock.patch('uuid.uuid4') as mock_id, \
+            mock.patch('core.date.DateTime.now') as mock_date:
+            mock_date.return_value = DateTime(2024, 9, 15, 11, 9, 15, 15659)
             mock_id.return_value = uuid.UUID('553ef2c4-4d81-4982-a0ce-77e6264113c5')
             article = Article('title', 'description', 'content', 'https://example.com')
             serialized_entity = dumps(article.__dict__)

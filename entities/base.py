@@ -1,4 +1,4 @@
-
+from typing import Any
 
 
 class BaseEntity:
@@ -14,3 +14,10 @@ class BaseEntity:
     def update(self):
         pass
 
+
+    def retrieve_single(self, id: Any):
+        pass
+
+    def retrieve_all(self):
+        pass
+        

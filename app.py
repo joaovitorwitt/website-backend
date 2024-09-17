@@ -3,13 +3,13 @@ import logging
 from flask import Flask
 from flask import request
 
+import psycopg
 import settings
 
 from entities.article import Article
 
 from entities.base import BaseEntity
 
-import psycopg
 
 
 app = Flask(__name__)
@@ -33,8 +33,22 @@ def create_article():
         image_url=article_data['image_url']
     )
 
+    with psycopg.connect(dbname='test-new-infra', user='postgres', password='barezia12', port=5432) as connection: # pylint: disable=not-context-manager
+        with connection.cursor() as cur:
+            cur.execute(
+                'INSERT INTO "Articles" ("UUID", "Title", "Description", "created_at", "date", "Content", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                (article.id, article.title, article.description, article.creation_time, article.date, article.content, article.image_url, article.url_title)
+            )
+
+            # cur.execute("SELECT * FROM Articles")
+            # cur.fetchone()
+
+            connection.commit()
+            cur.close()
+            connection.close()
+
     out = {
-        'response': 'ok',
+        'response': 'OK',
         'status_code': settings.HTTP_OK_REQUEST
     }
 
@@ -60,10 +74,22 @@ def list_single_articles(id: int):
 def list_projects():
     pass
 
+
 @app.route('/get/project/<id>', methods=['GET'])
 def list_project(id: int):
     pass
 
+
 @app.route('/create/project', methods=['POST'])
 def create_project():
+    pass
+
+
+@app.route('/delete/project/<id>', methods=['DELETE'])
+def delete_project(id: int):
+    pass
+
+
+@app.route('/update/project/<id>', methods=['PUT'])
+def update_project(id: int):
     pass

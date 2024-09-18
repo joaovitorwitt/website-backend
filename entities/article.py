@@ -7,6 +7,7 @@ from core.criptography import generate_unique_id
 
 from core.date import DateTime
 
+
 class Article(BaseEntity): # pylint: disable=too-many-instance-attributes
 
     def __init__(self, title: str, description: str, content: str, image_url: str, **kwargs) -> None: # pylint: disable=too-many-arguments, unused-argument

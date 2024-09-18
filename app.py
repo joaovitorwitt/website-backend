@@ -8,9 +8,6 @@ import settings
 
 from entities.article import Article
 
-import logging
-
-
 
 app = Flask(__name__)
 
@@ -20,12 +17,19 @@ log = logging.getLogger(__name__)
 
 @app.route("/get/articles", methods=['GET'])
 def list_articles():
-    pass
+
+    postgres_connection = PostgresConnection('test-new-infra')
+
+    response = postgres_connection.retrieve_all('123')
+
+    return response
 
 @app.route("/create/article", methods=['POST'])
 def create_article():
+    # get the data from the request
     article_data = request.get_json()
 
+    # instantiate
     article = Article(
         title=article_data['title'],
         description=article_data['description'],

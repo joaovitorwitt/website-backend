@@ -4,5 +4,15 @@ implement datetime test cases
 
 implement retrieve_single() and retrieve_many() on base entity
 
+revise postgress connection class
 
-implement database module to abstract the functionality from the endpoints
+implement logs
+
+######################################################
+BUG: psycopg import does not work on shell environment
+
+If I place the following code in the article entity
+
+from core.postgres import PostgresConnection
+
+I get an import error when running a shell environment

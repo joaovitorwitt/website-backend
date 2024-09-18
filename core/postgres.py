@@ -1,5 +1,7 @@
 
 
+from typing import Any
+
 import psycopg
 import settings
 
@@ -29,16 +31,35 @@ class PostgresConnection:
         conn = psycopg.connect(dbname=self.name, user=self.user, password=self.password, port=self.port)
         return conn
 
-    def insert(self, table: str, **kwargs):
+    def insert(self, table: str, **kwargs: dict) -> Any:
         conn = self.connect()
-    
+
         cur = conn.cursor()
-        
         cur.execute(
-            'INSERT INTO "Articles" ("UUID", "Title", "Description", "created_at", "date", "Content", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+            f'INSERT INTO "{table}" ("UUID", "Title", "Description", "created_at", "date", "Content", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
             (kwargs['id'], kwargs['title'], kwargs['description'], kwargs['created_at'], kwargs['date'], kwargs['content'], kwargs['image_url'], kwargs['url_title'])
         )
         conn.commit()
         cur.close()
         conn.close()
+
+
+    def retrieve_all(self, table: str, **kwargs: dict) -> Any:
+        conn = self.connect()
+
+        cur = conn.cursor()
+
+        
+        cur.execute('SELECT * FROM "Articles"')
+
+        rows = cur.fetchall()
+        cur.close()
+
+        conn.close()
+        return rows
+    
+
+
+    def retrieve_single(self, table: str, **kwargs: dict) -> Any:
+        pass
     

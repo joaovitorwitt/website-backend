@@ -1,5 +1,6 @@
 from typing import Any
 
+# from core.postgres import PostgresConnection
 
 class BaseEntity:
 
@@ -19,5 +20,7 @@ class BaseEntity:
         pass
 
     def retrieve_all(self):
-        pass
+        # retrieve all instances on the database for that entity
+        # for that we need the instance name
+        return self.__class__.__name__
         

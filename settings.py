@@ -1,5 +1,5 @@
 # pylint: disable=line-too-long
-
+PYTHON_VERSION='3.11.7'
 
 # Database configuration
 DATABASE_NAME='website_backend_0fvg'
@@ -18,17 +18,16 @@ FRONT_END_DEVELOPMENT_URL='https://websitefront-git-dev-joaovitorwitts-projects.
 PRODUCTION_URL='https://joaovitorwitt.com'
 
 
-PYTHON_VERSION='3.11.7'
-
 
 HTTP_BAD_REQUEST = 400
 HTTP_OK_REQUEST = 200
 # TODO: implement other types of codes
 
 
-SINGULAR_CONVERTION_EXCEPTIONS = ('photo', 'piano', 'halo', 'volcano')
+###################################################
+# 
+###################################################
+DEFAULT_POSTGRES_PORT=5432
+DEFAULT_POSTGRES_USER='postgres'
+DEFAULT_POSTGRES_PASSWORD='barezia12'
 
-IRREGULAR_NOUNS_SINGULAR = ('child', 'goose', 'man', 'woman', 'tooth', 'foot', 'mouse', 'people')
-IRREGULAR_NOUNS_PLURAL = ('children', 'geese', 'men', 'women', 'teeth', 'feet', 'mice', 'person')
-VOWELS = ('a', 'e', 'i', 'o', 'u')
-IMMUTABLE_PLURALS = ('sheep', 'series', 'species', 'deer')

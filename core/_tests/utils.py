@@ -48,5 +48,15 @@ class UtilsTestCase(TestCase):
         self.assertEqual(result, expected_response)
 
 
+    def test_mount_response_dict_with_invalid_number_of_elements(self):
+        cols = ['abc', 'def', 'ghi']
+        rows = [[1,2,3], [4,5,6], [7,8,9,0]]
+
+        with self.assertRaises(ValueError) as context:
+            mount_response_dict(rows, cols)
+
+        self.assertEqual(str(context.exception), 'invalid length')
+
+
 if __name__ == '__main__':
     unittest.main()

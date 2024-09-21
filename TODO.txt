@@ -1,7 +1,11 @@
-Configure endpoints
+review log messages
 
 implement datetime test cases
 
-implement retrieve_single() and retrieve_many() on base entity
-
 implement more utils test cases
+
+study SQL Injection
+
+add try exception validation to endpoints
+
+implement try exception functionality on endpoints

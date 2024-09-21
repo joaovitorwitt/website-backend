@@ -35,4 +35,7 @@ DEFAULT_POSTGRES_PASSWORD='barezia12'
 ###################################################
 #  logging stuff
 ###################################################
-STANDARD_LOG_DATE_FORMAT = "%Y-%m-%d %H:%M"
+STANDARD_LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+RED_LOGGING = "\\x1b[31;21m"
+

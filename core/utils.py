@@ -29,6 +29,10 @@ def mount_response_dict(rows: list, columns: list) -> list[dict]:
             }
         ]
     """
+    ref_value = len(columns)
+
+    validate_response_dict(rows, ref_value)
+
     result = {}
     data = []
 
@@ -40,3 +44,31 @@ def mount_response_dict(rows: list, columns: list) -> list[dict]:
         result = {}
 
     return data
+
+
+def validate_response_dict(lst: list, reference_value: int) -> bool:
+    """
+    Helper method to validate a section of rows inside a 2D
+    list against a `reference_value`.
+
+    Args:
+        lst (list): The list that will be validated.
+        reference_value (int): The value to be used as reference.
+
+    Raises:
+        ValueError: If one of the lists does not contain the correct number of elements.
+
+    Returns:
+        bool: When all the validation passes.
+
+    Example:
+        >>> cols = ['abc', 'def', 'ghi']
+        >>> rows = [[1,2,3], [4,5,6], [7,8,9,0]]
+        >>> validate_response_dict(rows, len(cols))
+        ValueError: invalid length
+    """
+    for l in lst:
+        if len(l) != reference_value:
+            raise ValueError('invalid length')
+
+    return True

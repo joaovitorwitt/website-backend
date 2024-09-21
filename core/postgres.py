@@ -5,8 +5,12 @@ from typing import Any
 import psycopg
 import settings
 
+from core.utils import mount_response_dict
 
 
+from core.log import Log
+
+logger = Log('database-instance')
 class PostgresConnection:
 
     def __init__(self, name: str, user: str = None, password: str = None, port: int = None, **kwargs) -> None:
@@ -49,16 +53,22 @@ class PostgresConnection:
 
         cur = conn.cursor()
 
-        
-        cur.execute('SELECT * FROM "Articles"')
+        cur.execute(f'SELECT * FROM "{table}"')
 
         rows = cur.fetchall()
+        columns = [row[0] for row in cur.description]
+
         cur.close()
-
         conn.close()
-        return rows
-    
 
+        data = mount_response_dict(rows, columns)
+
+        logger.debug(type(rows))
+        logger.debug(type(columns))
+
+        # for row in rows:
+
+        return data
 
     def retrieve_single(self, table: str, **kwargs: dict) -> Any:
         pass

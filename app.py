@@ -3,24 +3,24 @@ import logging
 from flask import Flask
 from flask import request
 
-from core.postgres import PostgresConnection
 import settings
+
+from core.postgres import PostgresConnection
+from core.log import Log
+
 
 from entities.article import Article
 
-
 app = Flask(__name__)
 
-# fix this
-log = logging.getLogger(__name__)
-
+log = Log('endpoints-log')
 
 @app.route("/get/articles", methods=['GET'])
 def list_articles():
 
     postgres_connection = PostgresConnection('test-new-infra')
 
-    response = postgres_connection.retrieve_all('123')
+    response = postgres_connection.retrieve_all('Articles')
 
     return response
 
@@ -49,14 +49,12 @@ def create_article():
                                image_url=article.image_url,
                                url_title=article.url_title
                             )
-    
+
     out = {
         'response': 'OK',
         'status_code': settings.HTTP_OK_REQUEST
     }
 
-    # return a status code 200 and a message indicating that the article was created
-    # json.dumps(article.__dict__)
     return out
 
 @app.route("/delete/articles<id>")

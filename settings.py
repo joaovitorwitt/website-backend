@@ -31,3 +31,8 @@ DEFAULT_POSTGRES_PORT=5432
 DEFAULT_POSTGRES_USER='postgres'
 DEFAULT_POSTGRES_PASSWORD='barezia12'
 
+
+###################################################
+#  logging stuff
+###################################################
+STANDARD_LOG_DATE_FORMAT = "%Y-%m-%d %H:%M"

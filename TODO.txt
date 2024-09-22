@@ -1,11 +1,13 @@
 review log messages
 
+review requirements.txt - too many unused libraries
+
 implement datetime test cases
 
 implement more utils test cases
 
 study SQL Injection
 
-add try exception validation to endpoints
-
 implement try exception functionality on endpoints
+
+implement docker

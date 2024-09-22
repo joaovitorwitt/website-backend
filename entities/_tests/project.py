@@ -10,7 +10,7 @@ class ProjectTestCase(TestCase):
         self.project = Project(
             title='Project Title',
             description='project description',
-            project_link='https://example.com',
+            content='https://example.com',
             image_url='https://example.com'
         )
 

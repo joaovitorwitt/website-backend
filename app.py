@@ -2,6 +2,8 @@
 from flask import Flask
 from flask import request
 
+from asgiref.wsgi import WsgiToAsgi
+
 import settings
 
 from core.postgres import PostgresConnection
@@ -11,6 +13,8 @@ from entities.article import Article
 from entities.project import Project
 
 app = Flask(__name__)
+
+asgi_app = WsgiToAsgi(app)
 
 log = Log('endpoints-log')
 

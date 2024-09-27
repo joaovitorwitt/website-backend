@@ -1,7 +1,6 @@
-# reference: https://docs.docker.com/guides/language/python/containerize/
 ARG PYTHON_VERSION=3.11.4
 
-FROM python:${PYTHON_VERSION}-slim AS base
+FROM python:${PYTHON_VERSION}-slim AS backend_base
 
 # Prevents Python from writing pyc files
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -35,7 +34,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Switch to the non-priviledged user to run the application
 USER appuser
 
-# Copy the source code into the container
+# Copy the source (.) code into the destination (.) container
 COPY . .
 
 # Expose the port that the application listens on

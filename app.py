@@ -22,9 +22,18 @@ postgres_connection = PostgresConnection('test-new-infra')
 
 @app.route("/get/articles", methods=['GET'])
 def list_articles():
-    response = postgres_connection.retrieve_all('Articles')
-    log.info('Articles retrieved')
-    return response
+    try:
+        response = postgres_connection.retrieve_all('Articles')
+        log.info('Articles retrieved')
+        return response
+
+    except Exception as error: # pylint: disable=broad-exception-caught
+        log.error(f'Failed to retrieve articles. {error}')
+        out = {
+            'response': 'failed',
+            'status_code': settings.HTTP_BAD_REQUEST
+        }
+        return out
 
 @app.route("/get/article/<id>", methods=['GET'])
 def list_single_articles(id: int): # pylint: disable=redefined-builtin

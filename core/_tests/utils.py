@@ -58,5 +58,9 @@ class UtilsTestCase(TestCase):
         self.assertEqual(str(context.exception), 'invalid length')
 
 
+    def test_sort_by_date(self):
+        pass
+
+
 if __name__ == '__main__':
     unittest.main()

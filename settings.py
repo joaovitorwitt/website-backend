@@ -25,7 +25,7 @@ HTTP_OK_REQUEST = 200
 
 
 ###################################################
-# 
+# database stuff
 ###################################################
 DEFAULT_POSTGRES_PORT=5432
 DEFAULT_POSTGRES_USER='postgres'
@@ -37,5 +37,7 @@ DEFAULT_POSTGRES_PASSWORD='barezia12'
 ###################################################
 STANDARD_LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
-RED_LOGGING = "\\x1b[31;21m"
-
+###################################################
+#  cors
+###################################################
+CORS_ALLOWED_ORIGINS = ['joaovitorwitt.com', 'http://127.0.0.1:5000', 'http://127.0.0.1:3000']

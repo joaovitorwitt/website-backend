@@ -8,9 +8,11 @@ import settings
 
 from core.postgres import PostgresConnection
 from core.log import Log
+from core.utils import sort_by_date, recursive_approach
 
 from entities.article import Article
 from entities.project import Project
+
 
 app = Flask(__name__)
 
@@ -25,9 +27,11 @@ def list_articles():
     try:
         response = postgres_connection.retrieve_all('Articles')
         log.info('Articles retrieved')
-        return response
 
-    except Exception as error: # pylint: disable=broad-exception-caught
+        result = recursive_approach(response, 0, [])
+        return result
+
+    except IndexError as error: # pylint: disable=broad-exception-caught
         log.error(f'Failed to retrieve articles. {error}')
         out = {
             'response': 'failed',

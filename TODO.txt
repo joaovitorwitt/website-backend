@@ -11,3 +11,8 @@ study SQL Injection
 implement try exception functionality on endpoints
 
 implement docker
+
+
+implement class to configure headers, cors, and request stuff
+
+IN PROGRESS - retrieve/send articles sorted by date

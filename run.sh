@@ -39,6 +39,12 @@ case $1 in
 
     ;;
 
+    prod-server)
+
+    hypercorn app:asgi_app
+
+    ;;
+
     *)
         echo "Option not found, use one of these: coverage, tests, shell, server"
         exit 1

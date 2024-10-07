@@ -118,42 +118,8 @@ def merge_sort(lst: list, order_type: str = 'asc'):
     return lst
 
 
-def sort_by_date(request_data: list) -> list:
-    """
-    This method is designed to work alongside
-    GET requests to sort the elements by date
-    using a merge sort algorithm.
 
-    Args:
-        request_data (list): The request date containing the elements for sorting.
-
-    Returns:
-        list: The final orded by date date
-    """
-    date_elements = []
-    new_request_data = []
-
-    tracker = 0
-
-    for element in request_data:
-        date_elements.append(element['created_at'])
-
-    sorted_dates =  merge_sort(date_elements, 'desc')
-
-
-    # breakpoint()
-    for element in request_data:
-        if sorted_dates[tracker] == element['created_at']:
-            new_request_data.append(element)
-            tracker += 1
-            continue
-
-            
-
-    return new_request_data
-
-
-def recursive_approach(request_data, tracker = 0, new_request_data = []):
+def recursive_filtering(request_data, tracker = 0, new_request_data = []): # pylint: disable=dangerous-default-value
     date_elements = []
 
     for element in request_data:
@@ -165,15 +131,14 @@ def recursive_approach(request_data, tracker = 0, new_request_data = []):
 
         for element in request_data:
             if len(request_data) == len(new_request_data):
-                    return new_request_data
-            
+                    return new_request_data # pylint: disable=bad-indentation
+
             if sorted_dates[tracker] == element['created_at']:
                 new_request_data.append(element)
                 tracker += 1
-                
-                recursive_approach(request_data, tracker, new_request_data)
+
+                recursive_filtering(request_data, tracker, new_request_data)
             else:
                 continue
 
     return new_request_data
-    

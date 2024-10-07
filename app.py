@@ -8,7 +8,7 @@ import settings
 
 from core.postgres import PostgresConnection
 from core.log import Log
-from core.utils import sort_by_date, recursive_approach
+from core.utils import recursive_filtering
 
 from entities.article import Article
 from entities.project import Project
@@ -28,10 +28,10 @@ def list_articles():
         response = postgres_connection.retrieve_all('Articles')
         log.info('Articles retrieved')
 
-        result = recursive_approach(response, 0, [])
+        result = recursive_filtering(response, 0, [])
         return result
 
-    except IndexError as error: # pylint: disable=broad-exception-caught
+    except Exception as error: # pylint: disable=broad-exception-caught
         log.error(f'Failed to retrieve articles. {error}')
         out = {
             'response': 'failed',
@@ -121,10 +121,19 @@ def update_article(id: int): # pylint: disable=redefined-builtin
 #==============================================
 @app.route('/get/projects', methods=['GET'])
 def list_projects():
-    response = postgres_connection.retrieve_all('Projects')
-    log.info('Projects retrieved')
+    try:
+        response = postgres_connection.retrieve_all('Projects')
+        log.info('Projects retrieved')
+        result = recursive_filtering(response, 0, [])
+        return result
 
-    return response
+    except Exception as error: # pylint: disable=broad-exception-caught
+        log.error(f'Failed to retrieve projects. {error}')
+        out = {
+            'response': 'ERROR',
+            'status_code': settings.HTTP_BAD_REQUEST
+        }
+        return out
 
 
 @app.route('/get/project/<id>', methods=['GET'])

@@ -142,3 +142,24 @@ def recursive_filtering(request_data, tracker = 0, new_request_data = []): # pyl
                 continue
 
     return new_request_data
+
+
+
+def mount_response_message(response_type: str, code: int) -> dict:
+    """
+    This method is design in order to mount request dictionaries
+    by making use of the response_type and the status code.
+
+    Args:
+        response_type (str): The type of response from the request, boils down to 'OK' or 'failed'.
+        code (int): The status code from the request.
+
+    Returns:
+        dict: The formatted response from the request.
+    """
+    out = {
+        'response': response_type,
+        'status_code': code
+    }
+
+    return out

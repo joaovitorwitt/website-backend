@@ -1,0 +1,9 @@
+implement datetime test cases
+
+implement more utils test cases
+
+study SQL Injection
+
+implement docker
+
+implement class to configure headers, cors, and request stuff

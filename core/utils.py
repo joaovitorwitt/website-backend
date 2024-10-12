@@ -74,48 +74,40 @@ def validate_response_dict(lst: list, reference_value: int) -> bool:
     return True
 
 
-def merge_sort(lst: list, order_type: str = 'asc'):
-    if len(lst) > 1:
+def merge_sort(arr, order = 'asc'):
+    if len(arr) <= 1:
+        return arr
 
-        # divide the list into two
-        r = len(lst) // 2
-        L = lst[:r]
-        M = lst[r:]
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
 
-        # sort the the two halves
-        merge_sort(L)
-        merge_sort(M)
+    sorted_left = merge_sort(left_half)
+    sorted_right = merge_sort(right_half)
 
-        i = j = k = 0
+    return merge(sorted_left, sorted_right, order)
 
-        # until we reach either end of either L or M, pick larger among
-        # elements L and M and place them in the correct position at A[p..r]
-        while i < len(L) and j < len(M):
-            if L[i] < M[j]:
-                lst[k] = L[i]
-                i += 1
-            else:
-                lst[k] = M[j]
-                j += 1
-            k += 1
+def merge(left, right, order = 'asc'):
+    result = []
+    i = j = 0
 
-        # when we run out of elements in either L or M,
-        # pick up the remaining elements and put in A[p..r]
-        while i < len(L):
-            lst[k] = L[i]
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
             i += 1
-            k += 1
 
-        while j < len(M):
-            lst[k] = M[j]
-            j += 1
+        else:
+            result.append(right[j])
             j += 1
 
-    # return the list reversed since we want to order by dates
-    if order_type == 'desc':
-        return lst[::-1]
+    result.extend(left[i:])
+    result.extend(right[j:])
 
-    return lst
+    if order == 'desc':
+        return result[::-1]
+
+    return result
+
 
 
 

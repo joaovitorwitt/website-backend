@@ -6,7 +6,7 @@ from unittest import TestCase
 from core.serialize import loads
 
 
-from core.utils import mount_response_dict
+from core.utils import mount_response_dict, merge_sort
 
 class UtilsTestCase(TestCase):
 
@@ -56,6 +56,25 @@ class UtilsTestCase(TestCase):
             mount_response_dict(rows, cols)
 
         self.assertEqual(str(context.exception), 'invalid length')
+
+
+    def test_merge_sort(self):
+        self.assertEqual(merge_sort([8,3,5,1,4,2,6,9,7]), [1,2,3,4,5,6,7,8,9])
+        self.assertEqual(merge_sort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]), [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9])
+        self.assertEqual(merge_sort([1, 2, 3, 4, 5, 6, 7, 8, 9]), [1, 2, 3, 4, 5, 6, 7, 8, 9])
+        self.assertEqual(merge_sort([9, 8, 7, 6, 5, 4, 3, 2, 1]), [1, 2, 3, 4, 5, 6, 7, 8, 9])
+        self.assertEqual(merge_sort([42]), [42])
+        self.assertEqual(merge_sort([7, 7, 7, 7, 7, 7, 7]), [7, 7, 7, 7, 7, 7, 7])
+        self.assertEqual(merge_sort([]), [])
+        self.assertEqual(merge_sort([3.1, 2.4, 5.9, 1.2, 4.6]), [1.2, 2.4, 3.1, 4.6, 5.9])
+        self.assertEqual(merge_sort([-3, -1, -4, -1, -5, -9, -2, -6, -5, -3, -5]), [-9, -6, -5, -5, -5, -4, -3, -3, -2, -1, -1])
+        self.assertEqual(merge_sort([3, -1, 4, 1, -5, 9, -2, 6, -5, 3, -5]), [-5, -5, -5, -2, -1, 1, 3, 3, 4, 6, 9])
+        self.assertEqual(merge_sort([12, 11, 45, 21, 0, -5, 34, 76, 89, -2, 99, 54, -33, 28]), [-33, -5, -2, 0, 11, 12, 21, 28, 34, 45, 54, 76, 89, 99])
+
+    def test_recursive_filtering(self):
+        pass
+
+
 
 
 if __name__ == '__main__':

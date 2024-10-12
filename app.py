@@ -2,6 +2,8 @@
 from flask import Flask
 from flask import request
 
+from flask_cors import CORS
+
 from asgiref.wsgi import WsgiToAsgi
 
 import settings
@@ -15,12 +17,13 @@ from entities.project import Project
 
 
 app = Flask(__name__)
+CORS(app, origins=settings.CORS_ALLOWED_ORIGINS)
 
 asgi_app = WsgiToAsgi(app)
 
 log = Log('endpoints-log')
 
-postgres_connection = PostgresConnection('test-new-infra')
+postgres_connection = PostgresConnection('Backend Data')
 
 @app.route("/get/articles", methods=['GET'])
 def list_articles():
@@ -131,8 +134,7 @@ def list_projects():
     try:
         response = postgres_connection.retrieve_all('Projects')
         log.info('Projects retrieved')
-        result = recursive_filtering(response, 0, [])
-        return result
+        return response
 
     except Exception as error: # pylint: disable=broad-exception-caught
         log.error(f'Failed to retrieve projects. {error}')

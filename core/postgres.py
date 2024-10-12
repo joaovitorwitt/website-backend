@@ -48,8 +48,8 @@ class PostgresConnection:
 
         if table == 'Projects':
             cur.execute(
-                f'INSERT INTO "{table}" ("UUID", "Title", "Description", "created_at", "date", "project_link", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-                (kwargs['id'], kwargs['title'], kwargs['description'], kwargs['created_at'], kwargs['date'], kwargs['project_link'], kwargs['image_url'], kwargs['url_title'])
+                f'INSERT INTO "{table}" ("UUID", "Title", "Description", "created_at", "date", "Content", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                (kwargs['id'], kwargs['title'], kwargs['description'], kwargs['created_at'], kwargs['date'], kwargs['content'], kwargs['image_url'], kwargs['url_title'])
             )
 
         conn.commit()

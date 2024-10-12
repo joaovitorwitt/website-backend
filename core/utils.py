@@ -1,5 +1,5 @@
 
-
+from typing import Any
 
 def mount_response_dict(rows: list, columns: list) -> list[dict]:
     """
@@ -111,7 +111,19 @@ def merge(left, right, order = 'asc'):
 
 
 
-def recursive_filtering(request_data, tracker = 0, new_request_data = []): # pylint: disable=dangerous-default-value
+def recursive_filtering(request_data: Any, tracker = 0, new_request_data = []) -> list: # pylint: disable=dangerous-default-value
+    """
+    This me is used in order to filter a list of dictionary objects by date.
+
+    Args:
+        request_data (Any): The data from the request.
+        tracker (int, optional): The variable which will hold the incrementing value. Defaults to 0.
+        new_request_data (list, optional): The new dictionary which will contain the filtered data. Defaults to [].
+
+
+    Returns:
+        list: A list object with all the dictionary elements ordered by date inside.
+    """
     date_elements = []
 
     for element in request_data:

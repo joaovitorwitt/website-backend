@@ -59,7 +59,7 @@ class UtilsTestCase(TestCase):
 
 
     def test_merge_sort(self):
-        self.assertEqual(merge_sort([8,3,5,1,4,2,6,9,7]), [1,2,3,4,5,6,7,8,9])
+        self.assertEqual(merge_sort([8, 3 ,5, 1, 4, 2, 6, 9, 7]), [1, 2, 3, 4, 5, 6, 7, 8, 9])
         self.assertEqual(merge_sort([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]), [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9])
         self.assertEqual(merge_sort([1, 2, 3, 4, 5, 6, 7, 8, 9]), [1, 2, 3, 4, 5, 6, 7, 8, 9])
         self.assertEqual(merge_sort([9, 8, 7, 6, 5, 4, 3, 2, 1]), [1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -70,6 +70,9 @@ class UtilsTestCase(TestCase):
         self.assertEqual(merge_sort([-3, -1, -4, -1, -5, -9, -2, -6, -5, -3, -5]), [-9, -6, -5, -5, -5, -4, -3, -3, -2, -1, -1])
         self.assertEqual(merge_sort([3, -1, 4, 1, -5, 9, -2, 6, -5, 3, -5]), [-5, -5, -5, -2, -1, 1, 3, 3, 4, 6, 9])
         self.assertEqual(merge_sort([12, 11, 45, 21, 0, -5, 34, 76, 89, -2, 99, 54, -33, 28]), [-33, -5, -2, 0, 11, 12, 21, 28, 34, 45, 54, 76, 89, 99])
+
+        self.assertEqual(merge_sort([8, 3, 5, 1, 4, 2, 6, 9, 7], 'desc'), [9, 8, 7, 6, 5, 4, 3, 2, 1])
+        self.assertEqual(merge_sort([12, 11, 45, 21, 0, -5, 34, 76, 89, -2, 99, 54, -33, 28], 'desc'), [99, 89, 76, 54, 45, 34, 28, 21, 12, 11, 0, -2, -5, -33])
 
     def test_recursive_filtering(self):
         pass

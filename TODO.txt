@@ -7,8 +7,3 @@ study SQL Injection
 implement docker
 
 implement class to configure headers, cors, and request stuff
-
-
-BUG - recursive_filtering
-
-this method is adding the same element twice in some cases

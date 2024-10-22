@@ -40,4 +40,4 @@ STANDARD_LOG_DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 ###################################################
 #  cors
 ###################################################
-CORS_ALLOWED_ORIGINS = ["*", "joaovitorwitt.com", "www.joaovitorwitt.com", "localhost:3000", "127.0.0.1", "https://portfolio-backend-fdxe.onrender.com"]
+CORS_ALLOWED_ORIGINS = ["*", "joaovitorwitt.com", "www.joaovitorwitt.com", "localhost:3000", "127.0.0.1", "https://joaovitorwitt.pythonanywhere.com"]

@@ -13,6 +13,7 @@ WORKDIR /app
 
 # Create a non-privileged user that the app will run under.
 # https://docs.docker.com/go/dockerfile-user-best-practices
+# https://docs.docker.com/guides/python/containerize/
 ARG UID=10001
 RUN adduser \
     --disabled-password \

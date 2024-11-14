@@ -109,8 +109,6 @@ def merge(left, right, order = 'asc'):
     return result
 
 
-
-
 def recursive_filtering(request_data: Any, tracker = 0, new_request_data = []) -> list: # pylint: disable=dangerous-default-value
     """
     This me is used in order to filter a list of dictionary objects by date.

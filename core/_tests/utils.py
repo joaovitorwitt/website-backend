@@ -3,10 +3,10 @@ import os
 import unittest
 from unittest import TestCase
 
+import settings
+
 from core.serialize import loads
-
-
-from core.utils import mount_response_dict, merge_sort
+from core.utils import mount_response_dict, merge_sort, mount_response_message
 
 class UtilsTestCase(TestCase):
 
@@ -70,12 +70,15 @@ class UtilsTestCase(TestCase):
         self.assertEqual(merge_sort([-3, -1, -4, -1, -5, -9, -2, -6, -5, -3, -5]), [-9, -6, -5, -5, -5, -4, -3, -3, -2, -1, -1])
         self.assertEqual(merge_sort([3, -1, 4, 1, -5, 9, -2, 6, -5, 3, -5]), [-5, -5, -5, -2, -1, 1, 3, 3, 4, 6, 9])
         self.assertEqual(merge_sort([12, 11, 45, 21, 0, -5, 34, 76, 89, -2, 99, 54, -33, 28]), [-33, -5, -2, 0, 11, 12, 21, 28, 34, 45, 54, 76, 89, 99])
-
         self.assertEqual(merge_sort([8, 3, 5, 1, 4, 2, 6, 9, 7], 'desc'), [9, 8, 7, 6, 5, 4, 3, 2, 1])
         self.assertEqual(merge_sort([12, 11, 45, 21, 0, -5, 34, 76, 89, -2, 99, 54, -33, 28], 'desc'), [99, 89, 76, 54, 45, 34, 28, 21, 12, 11, 0, -2, -5, -33])
 
     def test_recursive_filtering(self):
-        pass
+        pass # TODO
+
+    def test_mount_response_message(self):
+        self.assertEqual(mount_response_message('OK', settings.HTTP_OK_REQUEST), {'response': 'OK', 'status_code': 200})
+        self.assertEqual(mount_response_message('FAILED', settings.HTTP_BAD_REQUEST), {'response': 'FAILED', 'status_code': 400})
 
 
 

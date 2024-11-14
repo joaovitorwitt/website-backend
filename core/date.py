@@ -1,6 +1,4 @@
 
-from typing import Any
-
 from datetime import datetime
 
 
@@ -11,8 +9,8 @@ class DateTime(datetime):
         return super().now()
 
     @classmethod
-    def stringfy_date(cls, date: Any) -> str:
-        to_string = date.strftime('%Y%m%d T%H:%M:%S')
+    def stringfy_date(cls, date: 'DateTime', date_format: str = '%Y%m%d T%H:%M:%S' ) -> str:
+        to_string = date.strftime(date_format)
         return to_string
 
     @classmethod

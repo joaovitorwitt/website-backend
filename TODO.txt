@@ -4,3 +4,5 @@ study SQL Injection
 implement docker
 
 implement class to configure headers, cors, and request stuff
+
+FIX fucking coverage

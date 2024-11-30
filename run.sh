@@ -19,12 +19,8 @@ case $1 in
     coverage)
     echo "Running...."
 
-    if [[ -z "${PARAMS}" ]]; then
-        PARAMS="coverage"
-    fi
-
-    coverage run "${PARAMS}"
-
+    coverage run "${TESTS}"
+    coverage report 
     ;;
 
     server)

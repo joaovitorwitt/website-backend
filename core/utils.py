@@ -118,7 +118,6 @@ def recursive_filtering(request_data: Any, tracker = 0, new_request_data = []) -
         tracker (int, optional): The variable which will hold the incrementing value. Defaults to 0.
         new_request_data (list, optional): The new dictionary which will contain the filtered data. Defaults to [].
 
-
     Returns:
         list: A list object with all the dictionary elements ordered by date inside.
     """

@@ -101,7 +101,6 @@ def delete_article(id: int): # pylint: disable=redefined-builtin
         out = mount_response_message('failed', settings.HTTP_BAD_REQUEST)
         return out
 
-
 @app.route("/update/article/<id>", methods=['PUT'])
 def update_article(id: int): # pylint: disable=redefined-builtin
     try:
@@ -124,7 +123,6 @@ def update_article(id: int): # pylint: disable=redefined-builtin
         log.error(f'Failed to update the article. {error}')
         out = mount_response_message('failed', settings.HTTP_BAD_REQUEST)
         return out
-
 
 #==============================================
 # project endpoints
@@ -154,7 +152,6 @@ def list_project(id: int): # pylint: disable=redefined-builtin
         log.error(f'Failed to retrieve projects. {error}')
         out = mount_response_message('ERROR', settings.HTTP_BAD_REQUEST)
         return out
-
 
 @app.route('/create/project', methods=['POST'])
 def create_project():
@@ -189,7 +186,6 @@ def create_project():
         log.error(f'failed to created the project. {error}')
         out = mount_response_message('ERROR', settings.HTTP_BAD_REQUEST)
         return out
-
 
 @app.route('/delete/project/<id>', methods=['DELETE'])
 def delete_project(id: int): # pylint: disable=redefined-builtin

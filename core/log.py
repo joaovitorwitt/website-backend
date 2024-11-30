@@ -46,16 +46,16 @@ class Log:
 
     # public methods
     def debug(self, message: str):
-        self._log.log(logging.DEBUG, self.blue+message+self.reset)
+        self._log.log(logging.DEBUG, f'{self.blue}{message}{self.reset}') # pylint: disable=logging-fstring-interpolation
 
     def info(self, message: str):
         self._log.log(logging.INFO, message)
 
     def warning(self, message: str):
-        self._log.log(logging.WARNING, self.yellow+message+self.reset)
+        self._log.log(logging.WARNING, f'{self.yellow}{message}{self.reset}') # pylint: disable=logging-fstring-interpolation
 
     def error(self, message: str):
-        self._log.log(logging.ERROR, self.red+message+self.reset)
+        self._log.log(logging.ERROR, f'{self.red}{message}{self.reset}') # pylint: disable=logging-fstring-interpolation
 
     def critical(self, message: str):
-        self._log.log(logging.CRITICAL, self.bold_red+message+self.reset)
+        self._log.log(logging.CRITICAL, f'{self.bold_red}{message}{self.reset}') # pylint: disable=logging-fstring-interpolation

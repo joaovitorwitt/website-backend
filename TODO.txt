@@ -3,4 +3,8 @@ study SQL Injection
 
 implement docker
 
+IN PROGRESS: implement dev container
+IN PROGRESS: implement vscode tasks
+IN PROGRESS: implement CI/CD
+
 implement class to configure headers, cors, and request stuff

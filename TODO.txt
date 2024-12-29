@@ -1,7 +1,7 @@
 
 study SQL Injection
 
-implement docker
+IN PROGRESS: implement docker
 
 IN PROGRESS: implement dev container
 IN PROGRESS: implement vscode tasks

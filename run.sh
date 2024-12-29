@@ -13,7 +13,7 @@ case $1 in
     tests)
 
     # run tests
-    pytest "${TESTS}"
+    python -m pytest "${TESTS}"
     ;;
 
     coverage)

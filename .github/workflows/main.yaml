@@ -20,6 +20,8 @@ jobs:
         python-version: "3.10"
     - name: Set execute permission for run.sh
       run: chmod +x ./run.sh
+    - name: Install pytest
+      run: pip install pytest
     - name: Test with pytest
       run: |
         ./run.sh tests

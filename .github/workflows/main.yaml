@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +18,9 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+    - name: Set execute permission for run.sh
+      run: chmod +x ./run.sh
     - name: Test with pytest
       run: |
-        git update-index --remove --chmod=+x ./run.sh tests
+        ./run.sh
+        pytest tests

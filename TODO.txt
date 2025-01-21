@@ -4,3 +4,6 @@ study SQL Injection
 implement docker
 
 implement class to configure headers, cors, and request stuff
+
+
+study how a server works, protocols etc

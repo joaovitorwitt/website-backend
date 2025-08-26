@@ -2,7 +2,7 @@
 
 from typing import Any
 
-import psycopg
+import psycopg2
 import settings
 
 from core.utils import mount_response_dict
@@ -32,7 +32,10 @@ class PostgresConnection:
 
 
     def connect(self):
-        conn = psycopg.connect(dbname=self.name, user=self.user, password=self.password, port=self.port)
+        """
+        Creates the postgres connection
+        """
+        conn = psycopg2.connect(dbname=self.name, user=self.user, password=self.password, port=self.port)
         return conn
 
     def insert(self, table: str, **kwargs: dict) -> Any:

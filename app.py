@@ -124,9 +124,7 @@ def update_article(id: int): # pylint: disable=redefined-builtin
         out = mount_response_message('failed', settings.HTTP_BAD_REQUEST)
         return out
 
-#==============================================
-# project endpoints
-#==============================================
+
 @app.route('/get/projects', methods=['GET'])
 def list_projects():
     try:

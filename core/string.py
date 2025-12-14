@@ -1,8 +1,7 @@
-from core.date import DateTime
+from datetime import datetime
 
 
-
-def normalize_date(date: DateTime) -> str:
+def normalize_date(date: datetime) -> str:
     """
     This method is used when to extract a normalized format
     for object instances. 

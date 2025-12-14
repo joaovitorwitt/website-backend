@@ -31,7 +31,7 @@ case $1 in
 
     shell)
 
-    ipython
+    ipython3
 
     ;;
 

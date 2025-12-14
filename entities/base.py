@@ -2,7 +2,7 @@ from typing import Any
 
 from core.string import format_title_for_displaying, format_title_for_url, normalize_date
 from core.criptography import generate_unique_id
-from core.date import DateTime
+from datetime import datetime
 
 class BaseEntity: # pylint: disable=too-many-instance-attributes
 
@@ -10,12 +10,11 @@ class BaseEntity: # pylint: disable=too-many-instance-attributes
         self.id = generate_unique_id()
         self.title = format_title_for_displaying(title)
         self.description: str = description
-        self.creation_time = DateTime.stringfy_date(DateTime.now())
-        self.date = normalize_date(DateTime.now())
+        self.creation_time = datetime.strftime(datetime.now(), format='%Y%m%d T%H:%M:%S')
+        self.date = normalize_date(datetime.now())
         self.content: str = content
         self.image_url: str = image_url
         self.url_title: str = format_title_for_url(self.title)
-
 
     def __repr__(self) -> str:
         """

@@ -90,6 +90,27 @@ class PostgresConnection:
 
         data = mount_response_dict(rows, columns)
         return data
+    
+    # TODO: adapt this method to the code, remove the other two since there was
+    # duplicated code, now i added a flag to check if we should retrieve all
+    # the instances of just a single based on the id
+    def retrieve(self, table: str, type: str = 'all', **kwargs: dict) -> Any:
+        conn = self.connect()
+        cur = conn.cursor()
+
+        if type == 'all':
+            cur.execute(f'SELECT * FROM "{table}"')
+        else:
+            cur.execute(f'SELECT * FROM "{table}" WHERE id = {kwargs["id"]}')
+
+        rows = cur.fetchall()
+        columns = [row[0] for row in cur.description]
+
+        cur.close()
+        conn.close()
+
+        data = mount_response_dict(rows, columns)
+        return data
 
     def delete(self, table: str, **kwargs: dict) -> None:
         conn = self.connect()

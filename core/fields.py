@@ -1,5 +1,0 @@
-
-
-class BaseInput:
-    pass
-    

@@ -41,8 +41,17 @@ case $1 in
 
     ;;
 
+    virtual-env)
+
+    . .venv/bin/activate
+
+    ;;
+
     *)
         echo "Option not found, use one of these: coverage, tests, shell, server"
         exit 1
     ;;
 esac
+
+
+# run sh to activate virtual environment

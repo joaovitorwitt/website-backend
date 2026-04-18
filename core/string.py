@@ -18,6 +18,14 @@ def normalize_date(date: datetime) -> str:
     year = date.year
     return f'{month} {day}, {year}'
 
+
+def to_date() -> str:
+    """
+    Returns a string in the following format:
+    '2025-01-24'
+    """
+    return datetime.today().strftime(format='%Y-%m-%d')
+
 def format_title_for_url(title: str) -> str:
     """
     This private method takes a title and converts into

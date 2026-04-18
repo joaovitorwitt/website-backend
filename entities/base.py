@@ -1,20 +1,18 @@
-from typing import Any
 
-from core.string import format_title_for_displaying, format_title_for_url, normalize_date
-from core.criptography import generate_unique_id
+from core.string import format_title_for_displaying, format_title_for_url, normalize_date, to_date
 from datetime import datetime
 
 class BaseEntity: # pylint: disable=too-many-instance-attributes
 
     def __init__(self, title: str, description: str, content: str, image_url: str) -> None:
-        self.id = generate_unique_id()
         self.title = format_title_for_displaying(title)
         self.description: str = description
         self.creation_time = datetime.strftime(datetime.now(), format='%Y%m%d T%H:%M:%S')
         self.date = normalize_date(datetime.now())
         self.content: str = content
         self.image_url: str = image_url
-        self.url_title: str = format_title_for_url(self.title)
+        self.title_url: str = format_title_for_url(self.title)
+        self.title_date = f'{self.title_url}_{to_date()}'
 
     def __repr__(self) -> str:
         """
@@ -49,7 +47,7 @@ class BaseEntity: # pylint: disable=too-many-instance-attributes
         """
         return len(self.__dict__)
 
-    def __getitem__(self, position: str) -> Any:
+    def __getitem__(self, position: str):
         """
         This dunder method is used to make the
         instance subscriptable when using the following
@@ -74,14 +72,14 @@ class BaseEntity: # pylint: disable=too-many-instance-attributes
         """
         self.__dict__[current] = new
 
-    def validate(self):
-        raise NotImplementedError()
-
     def save(self):
+        raise NotImplementedError()
+    
+    def load(self):
+        raise NotImplementedError()
+    
+    def load_all(self):
         raise NotImplementedError()
 
     def delete(self):
-        raise NotImplementedError()
-
-    def update(self):
         raise NotImplementedError()

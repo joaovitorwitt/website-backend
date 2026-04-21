@@ -27,3 +27,4 @@ hyperframe
 # actually used
 ipython
 requests
+ruff

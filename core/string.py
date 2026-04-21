@@ -4,7 +4,7 @@ from datetime import datetime
 def normalize_date(date: datetime) -> str:
     """
     This method is used when to extract a normalized format
-    for object instances. 
+    for object instances.
 
     Returns:
         str: The datetime object converted to string in the following format: "month day, year"
@@ -13,10 +13,10 @@ def normalize_date(date: datetime) -> str:
         >>> normalize_date()
         'August 12, 2024'
     """
-    month = date.strftime('%B')
+    month = date.strftime("%B")
     day = date.day
     year = date.year
-    return f'{month} {day}, {year}'
+    return f"{month} {day}, {year}"
 
 
 def to_date() -> str:
@@ -24,7 +24,8 @@ def to_date() -> str:
     Returns a string in the following format:
     '2025-01-24'
     """
-    return datetime.today().strftime(format='%Y-%m-%d')
+    return datetime.today().strftime(format="%Y-%m-%d")
+
 
 def format_title_for_url(title: str) -> str:
     """
@@ -41,8 +42,9 @@ def format_title_for_url(title: str) -> str:
         >>> _format_title_for_url("How the Measurament of Units Changed Physics")
         'how-the-measurament-of-units-changed-physics'
     """
-    new_title = title.lower().strip().replace(' ', '-')
+    new_title = title.lower().strip().replace(" ", "-")
     return new_title
+
 
 def format_title_for_displaying(title: str) -> str:
     """
@@ -67,4 +69,4 @@ def format_title_for_displaying(title: str) -> str:
         word = word.capitalize()
         new_list.append(word)
 
-    return ' '.join(new_list)
+    return " ".join(new_list)

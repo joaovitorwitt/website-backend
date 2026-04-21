@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E '\\\\.\\(py|txt|toml|yml|yaml|env\\)$|Dockerfile|docker-compose')"
+      "Bash(grep -E '\\\\.\\(py|txt|toml|yml|yaml|env\\)$|Dockerfile|docker-compose')",
+      "Bash(ruff --version)"
     ]
   }
 }

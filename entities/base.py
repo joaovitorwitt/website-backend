@@ -1,6 +1,13 @@
 
-from core.string import format_title_for_displaying, format_title_for_url, normalize_date, to_date
 from datetime import datetime
+
+from core.string import (
+    format_title_for_displaying,
+    format_title_for_url,
+    normalize_date,
+    to_date,
+)
+
 
 class BaseEntity: # pylint: disable=too-many-instance-attributes
 
@@ -74,10 +81,10 @@ class BaseEntity: # pylint: disable=too-many-instance-attributes
 
     def save(self):
         raise NotImplementedError()
-    
+
     def load(self):
         raise NotImplementedError()
-    
+
     def load_all(self):
         raise NotImplementedError()
 

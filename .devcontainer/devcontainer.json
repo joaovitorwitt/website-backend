@@ -9,7 +9,10 @@
       "extensions": [
         "ms-python.python",
         "ms-python.debugpy",
-        "charliermarsh.ruff"
+        "charliermarsh.ruff",
+        "anthropic.claude-code",
+        "postman.postman-for-vscode",
+        "eamodio.gitlens"
       ],
       "settings": {
         "[python]": {
@@ -24,6 +27,5 @@
     }
   },
   "overrideCommand": true,
-  "postCreateCommand": "pip install -r requirements.txt",
   "remoteUser": "appuser"
 }

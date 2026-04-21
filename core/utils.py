@@ -1,8 +1,6 @@
-
-
 def mount_response_dict(rows: list, columns: list) -> list[dict]:
     """
-    Simple algorithm to map a `columns` list to each row sublist 
+    Simple algorithm to map a `columns` list to each row sublist
     inside `rows` list, converting them to a dictionary.
 
     Args:
@@ -66,14 +64,14 @@ def validate_response_dict(lst: list, reference_value: int) -> bool:
         >>> validate_response_dict(rows, len(cols))
         ValueError: invalid length
     """
-    for l in lst:
-        if len(l) != reference_value:
-            raise ValueError('invalid length')
+    for element in lst:
+        if len(element) != reference_value:
+            raise ValueError("invalid length")
 
     return True
 
 
-def merge_sort(arr, order = 'asc'):
+def merge_sort(arr, order="asc"):
     if len(arr) <= 1:
         return arr
 
@@ -86,7 +84,8 @@ def merge_sort(arr, order = 'asc'):
 
     return merge(sorted_left, sorted_right, order)
 
-def merge(left, right, order = 'asc'):
+
+def merge(left, right, order="asc"):
     result = []
     i = j = 0
 
@@ -102,13 +101,13 @@ def merge(left, right, order = 'asc'):
     result.extend(left[i:])
     result.extend(right[j:])
 
-    if order == 'desc':
+    if order == "desc":
         return result[::-1]
 
     return result
 
 
-def recursive_filtering(request_data, tracker = 0, new_request_data = None) -> list:
+def recursive_filtering(request_data, tracker=0, new_request_data=None) -> list:
     """
     This me is used in order to filter a list of dictionary objects by date.
 
@@ -126,17 +125,16 @@ def recursive_filtering(request_data, tracker = 0, new_request_data = None) -> l
     date_elements = []
 
     for element in request_data:
-        date_elements.append(element['created_at'])
+        date_elements.append(element["created_at"])
 
-    sorted_dates = merge_sort(date_elements, 'desc')
+    sorted_dates = merge_sort(date_elements, "desc")
 
     while len(new_request_data) != len(request_data):
-
         for element in request_data:
             if len(request_data) == len(new_request_data):
-                    return new_request_data # pylint: disable=bad-indentation
+                return new_request_data  # pylint: disable=bad-indentation
 
-            if sorted_dates[tracker] == element['created_at']:
+            if sorted_dates[tracker] == element["created_at"]:
                 new_request_data.append(element)
                 tracker += 1
 
@@ -145,7 +143,6 @@ def recursive_filtering(request_data, tracker = 0, new_request_data = None) -> l
                 continue
 
     return new_request_data
-
 
 
 def mount_response_message(response_type: str, code: int) -> dict:
@@ -160,9 +157,6 @@ def mount_response_message(response_type: str, code: int) -> dict:
     Returns:
         dict: The formatted response from the request.
     """
-    out = {
-        'response': response_type,
-        'status_code': code
-    }
+    out = {"response": response_type, "status_code": code}
 
     return out

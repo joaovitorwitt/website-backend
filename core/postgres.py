@@ -13,29 +13,21 @@ log = logging.getLogger(__name__)
 
 class PostgresConnection:
 
-    def __init__(self, name: str, user: str = None, password: str = None, port: int = None, **kwargs) -> None:
-        self.name = name
-        self.user = user
-        self.password = password
-        self.port = port
+    def __init__(self, name: str = None, user: str = None, password: str = None, port: int = None, host: str = None, **kwargs) -> None:
+        self.name = name or settings.DEFAULT_POSTGRES_DB
+        self.user = user or settings.DEFAULT_POSTGRES_USER
+        self.password = password or settings.DEFAULT_POSTGRES_PASSWORD
+        self.port = port or settings.DEFAULT_POSTGRES_PORT
+        self.host = host or settings.DEFAULT_POSTGRES_HOST
 
         self.kwargs = kwargs
-
-        if self.user is None:
-            self.user = settings.DEFAULT_POSTGRES_USER
-
-        if self.password is None:
-            self.password = settings.DEFAULT_POSTGRES_PASSWORD
-
-        if self.port is None:
-            self.port = settings.DEFAULT_POSTGRES_PORT
 
 
     def connect(self):
         """
         Creates the postgres connection
         """
-        conn = psycopg.connect(dbname=self.name, user=self.user, password=self.password, port=self.port)
+        conn = psycopg.connect(dbname=self.name, user=self.user, password=self.password, port=self.port, host=self.host)
         return conn
 
     def insert(self, table: str, **kwargs: dict) -> None:

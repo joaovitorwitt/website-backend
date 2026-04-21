@@ -16,6 +16,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 
+RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Create a non-privileged user that the app will run under.
@@ -24,9 +26,8 @@ ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
+    --home "/home/appuser" \
+    --shell "/bin/bash" \
     --uid "${UID}" \
     appuser
 
@@ -48,4 +49,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the application.
-CMD flask run
+CMD flask run --host=0.0.0.0 --port=8000

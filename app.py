@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 log = logging.getLogger(__name__)
 
-postgres_connection = PostgresConnection('Backend Data')
+postgres_connection = PostgresConnection()
 
 @app.route("/get/articles", methods=['GET'])
 def list_articles():
@@ -62,7 +62,6 @@ def delete_article(id: int): # pylint: disable=redefined-builtin
 @app.route('/get/projects', methods=['GET'])
 def list_projects():
     try:
-        breakpoint()
         response = postgres_connection.retrieve_all('Projects')
         log.info('Projects retrieved')
         return response

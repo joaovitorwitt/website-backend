@@ -2,7 +2,22 @@
   "permissions": {
     "allow": [
       "Bash(grep -E '\\\\.\\(py|txt|toml|yml|yaml|env\\)$|Dockerfile|docker-compose')",
-      "Bash(ruff --version)"
+      "Bash(ruff --version)",
+      "Bash(echo \"=== core/postgres.py ===\" && cat core/postgres.py && echo \"=== .gitignore ===\" && cat .gitignore && echo \"=== devcontainer ===\" && cat .devcontainer/devcontainer.json && echo \"=== .env \\(masked\\) ===\" && sed 's/=.*/=<redacted>/' .env)",
+      "Bash(git rm *)",
+      "Bash(rm -rf docker docker-compose.yml .devcontainer)",
+      "Bash(python3 -c \"import flask, flask_cors, psycopg, dotenv; print\\('all deps present'\\)\")",
+      "Bash(python3 -m venv .venv)",
+      "Bash(.venv/bin/pip install *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(.venv/bin/gunicorn app:app --bind 127.0.0.1:8011 --log-file -)",
+      "Bash(curl -s -i -H \"Origin: https://joaovitorwitt.com\" http://127.0.0.1:8011/get/articles)",
+      "Bash(pkill -f \"gunicorn app:app\")",
+      "Bash(.venv/bin/ruff check *)"
+    ],
+    "additionalDirectories": [
+      "/home/joaovitorsegalla/development/website-backend"
     ]
   }
 }

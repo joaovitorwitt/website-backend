@@ -30,12 +30,16 @@ class PostgresConnection:
         """
         Creates the postgres connection
         """
+        if settings.DATABASE_URL:
+            return psycopg.connect(settings.DATABASE_URL)
+
         conn = psycopg.connect(
             dbname=self.name,
             user=self.user,
             password=self.password,
             port=self.port,
             host=self.host,
+            sslmode=settings.POSTGRES_SSLMODE,
         )
         return conn
 

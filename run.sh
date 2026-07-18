@@ -25,7 +25,7 @@ case $1 in
 
     server)
 
-    flask run
+    FLASK_APP=app flask run --debug --port "${PORT:-8000}"
 
     ;;
 
@@ -37,7 +37,7 @@ case $1 in
 
     prod-server)
 
-    hypercorn app:asgi_app
+    gunicorn app:app --bind "0.0.0.0:${PORT:-8000}"
 
     ;;
 

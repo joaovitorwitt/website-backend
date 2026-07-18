@@ -1,12 +1,14 @@
 import logging
 
 from flask import Flask
+from flask_cors import CORS
 
 import settings
 from core.postgres import PostgresConnection
 from core.utils import mount_response_message, recursive_filtering
 
 app = Flask(__name__)
+CORS(app, origins=settings.CORS_ALLOWED_ORIGINS)
 
 
 log = logging.getLogger(__name__)

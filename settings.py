@@ -34,6 +34,16 @@ PREPARE_THRESHOLD = None if os.environ.get('USE_TRANSACTION_POOLER') else 5
 
 CONTENT_KINDS = ('article', 'project')
 
+# How long a read stays fresh. Articles are published rarely, so minutes are
+# safe; a new post simply takes up to this long to appear.
+CACHE_MAX_AGE = int(os.environ.get('CACHE_MAX_AGE', 300))
+
+# Window after expiry where a client may serve the stale copy while it
+# refetches, so nobody waits on a cold start.
+CACHE_STALE_WHILE_REVALIDATE = int(
+    os.environ.get('CACHE_STALE_WHILE_REVALIDATE', 86400)
+)
+
 HTTP_NOT_FOUND = 404
 
 HTTP_SERVER_ERROR = 500

@@ -33,6 +33,40 @@ log = logging.getLogger(__name__)
 repository = ContentRepository()
 
 
+@app.after_request
+def add_cache_headers(response):
+    """
+    Content changes rarely, so successful reads are cacheable. This buys three
+    things: browsers skip the request entirely inside max-age, any CDN put in
+    front can serve other visitors without waking the backend, and the ETag
+    turns a repeat request into a 304 with no body.
+
+    stale-while-revalidate lets a client keep using a slightly old copy while it
+    refreshes in the background, which hides the cold start on the free tier.
+    """
+    cacheable = (
+        request.method == 'GET'
+        and response.status_code == 200
+        and request.endpoint != 'health'
+    )
+    if not cacheable:
+        response.cache_control.no_store = True
+        return response
+
+    # Set as one header rather than appending; split Cache-Control headers are
+    # legal but some CDNs only honour the first.
+    response.headers['Cache-Control'] = (
+        f'public, max-age={settings.CACHE_MAX_AGE}, '
+        f'stale-while-revalidate={settings.CACHE_STALE_WHILE_REVALIDATE}'
+    )
+
+    # `Vary: Origin` matters here so a CDN never hands one site's CORS headers to
+    # another, but flask-cors already sets it on every response.
+
+    response.add_etag()
+    return response.make_conditional(request)
+
+
 def error(message: str, status: int):
     return jsonify({'error': message}), status
 

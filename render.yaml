@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: website-backend
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    # Render injects $PORT; binding anywhere else makes the service unreachable.
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 60
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      # Total connections to Supabase is POOL_MAX_SIZE * workers, so 2 * 2 here.
+      - key: POOL_MIN_SIZE
+        value: 1
+      - key: POOL_MAX_SIZE
+        value: 2
+      # Set in the Render dashboard, never committed.
+      - key: DATABASE_URL
+        sync: false

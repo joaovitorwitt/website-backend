@@ -38,11 +38,13 @@ HTTP_NOT_FOUND = 404
 
 HTTP_SERVER_ERROR = 500
 
+# Origins are matched against the browser's Origin header, which always carries
+# a scheme, so bare hostnames never match. A leading '*' would also make every
+# other entry here dead weight.
 CORS_ALLOWED_ORIGINS = [
-    '*',
-    'joaovitorwitt.com',
-    'www.joaovitorwitt.com',
-    'localhost:3000',
-    '127.0.0.1',
+    'https://joaovitorwitt.com',
+    'https://www.joaovitorwitt.com',
     'https://joaovitorwitt.pythonanywhere.com',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
 ]

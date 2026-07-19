@@ -16,6 +16,9 @@ __pycache__/
 # Environements
 .env
 
+# Local seed data; the real content lives in the database
+fixtures/
+
 # IDE
 .vscode/
 

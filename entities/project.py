@@ -1,4 +1,3 @@
-
 from entities.base import BaseEntity
 
 

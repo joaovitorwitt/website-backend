@@ -1,145 +1,108 @@
 import logging
+from functools import lru_cache
 
-import psycopg
+from psycopg.rows import dict_row
+from psycopg_pool import ConnectionPool
 
 import settings
-from core.utils import mount_response_dict
 
 log = logging.getLogger(__name__)
 
 
-class PostgresConnection:
-    def __init__(
+# Listed explicitly so a schema change cannot silently reshape the API response.
+CONTENT_COLUMNS = (
+    'id',
+    'kind',
+    'title',
+    'slug',
+    'description',
+    'content',
+    'image_url',
+    'tags',
+    'created_at',
+)
+
+_SELECT = f'SELECT {", ".join(CONTENT_COLUMNS)} FROM content'
+
+
+def build_conninfo() -> str:
+    """
+    Builds the libpq connection string. A DATABASE_URL (what Supabase hands you)
+    wins over the individual POSTGRES_* settings.
+    """
+    if settings.DATABASE_URL:
+        return settings.DATABASE_URL
+
+    return (
+        f'host={settings.DEFAULT_POSTGRES_HOST} '
+        f'port={settings.DEFAULT_POSTGRES_PORT} '
+        f'dbname={settings.DEFAULT_POSTGRES_DB} '
+        f'user={settings.DEFAULT_POSTGRES_USER} '
+        f'password={settings.DEFAULT_POSTGRES_PASSWORD} '
+        f'sslmode={settings.POSTGRES_SSLMODE}'
+    )
+
+
+@lru_cache(maxsize=1)
+def get_pool() -> ConnectionPool:
+    """
+    One pool per process, built lazily so importing this module never opens a
+    socket. `open=False` plus an explicit open keeps import side effects out.
+    """
+    pool = ConnectionPool(
+        conninfo=build_conninfo(),
+        min_size=settings.POOL_MIN_SIZE,
+        max_size=settings.POOL_MAX_SIZE,
+        kwargs={
+            'row_factory': dict_row,
+            'prepare_threshold': settings.PREPARE_THRESHOLD,
+        },
+        open=False,
+    )
+    pool.open()
+    return pool
+
+
+class ContentRepository:
+    """
+    Read-only access to the `content` table. Every value reaching SQL goes
+    through a bound parameter; nothing is interpolated into the statement.
+    """
+
+    def search(
         self,
-        name: str = None,
-        user: str = None,
-        password: str = None,
-        port: int = None,
-        host: str = None,
-        **kwargs,
-    ) -> None:
-        self.name = name or settings.DEFAULT_POSTGRES_DB
-        self.user = user or settings.DEFAULT_POSTGRES_USER
-        self.password = password or settings.DEFAULT_POSTGRES_PASSWORD
-        self.port = port or settings.DEFAULT_POSTGRES_PORT
-        self.host = host or settings.DEFAULT_POSTGRES_HOST
+        kind: str | None = None,
+        tag: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[dict]:
+        clauses = []
+        params: list = []
 
-        self.kwargs = kwargs
+        if kind is not None:
+            clauses.append('kind = %s')
+            params.append(kind)
 
-    def connect(self):
-        """
-        Creates the postgres connection
-        """
-        if settings.DATABASE_URL:
-            return psycopg.connect(settings.DATABASE_URL)
+        if tag is not None:
+            clauses.append('%s = ANY(tags)')
+            params.append(tag)
 
-        conn = psycopg.connect(
-            dbname=self.name,
-            user=self.user,
-            password=self.password,
-            port=self.port,
-            host=self.host,
-            sslmode=settings.POSTGRES_SSLMODE,
-        )
-        return conn
+        where = f' WHERE {" AND ".join(clauses)}' if clauses else ''
 
-    def insert(self, table: str, **kwargs: dict) -> None:
-        conn = self.connect()
+        # Ordering in SQL rather than in Python; the index on
+        # (kind, created_at desc) serves this directly.
+        query = f'{_SELECT}{where} ORDER BY created_at DESC LIMIT %s OFFSET %s'
+        params.extend([limit, offset])
 
-        cur = conn.cursor()
+        with get_pool().connection() as conn:
+            rows = conn.execute(query, params).fetchall()
 
-        if table == "Articles":
-            cur.execute(
-                f'INSERT INTO "{table}" ("UUID", "Title", "Description", "created_at", "date", "Content", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-                (
-                    kwargs["id"],
-                    kwargs["title"],
-                    kwargs["description"],
-                    kwargs["created_at"],
-                    kwargs["date"],
-                    kwargs["content"],
-                    kwargs["image_url"],
-                    kwargs["url_title"],
-                ),
-            )
+        return rows
 
-        if table == "Projects":
-            cur.execute(
-                f'INSERT INTO "{table}" ("UUID", "Title", "Description", "created_at", "date", "Content", "image_url", "url_title") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-                (
-                    kwargs["id"],
-                    kwargs["title"],
-                    kwargs["description"],
-                    kwargs["created_at"],
-                    kwargs["date"],
-                    kwargs["content"],
-                    kwargs["image_url"],
-                    kwargs["url_title"],
-                ),
-            )
+    def get_by_slug(self, kind: str, slug: str) -> dict | None:
+        query = f'{_SELECT} WHERE kind = %s AND slug = %s'
 
-        conn.commit()
-        cur.close()
-        conn.close()
+        with get_pool().connection() as conn:
+            row = conn.execute(query, (kind, slug)).fetchone()
 
-    def retrieve_all(self, table: str, **kwargs: dict) -> dict:
-        conn = self.connect()
-        cur = conn.cursor()
-
-        cur.execute(f'SELECT * FROM "{table}"')
-
-        rows = cur.fetchall()
-        columns = [row[0] for row in cur.description]
-
-        cur.close()
-        conn.close()
-
-        data = mount_response_dict(rows, columns)
-
-        return data
-
-    def retrieve_single(self, table: str, **kwargs: dict) -> list:
-        conn = self.connect()
-        cur = conn.cursor()
-
-        cur.execute(f'SELECT * FROM "{table}" WHERE id = {kwargs["id"]}')
-
-        rows = cur.fetchall()
-        columns = [row[0] for row in cur.description]
-
-        cur.close()
-        conn.close()
-
-        data = mount_response_dict(rows, columns)
-        return data
-
-    # TODO: adapt this method to the code, remove the other two since there was
-    # duplicated code, now i added a flag to check if we should retrieve all
-    # the instances of just a single based on the id
-    def retrieve(self, table: str, type: str = "all", **kwargs: dict) -> list:
-        conn = self.connect()
-        cur = conn.cursor()
-
-        if type == "all":
-            cur.execute(f'SELECT * FROM "{table}"')
-        else:
-            cur.execute(f'SELECT * FROM "{table}" WHERE id = {kwargs["id"]}')
-
-        rows = cur.fetchall()
-        columns = [row[0] for row in cur.description]
-
-        cur.close()
-        conn.close()
-
-        data = mount_response_dict(rows, columns)
-        return data
-
-    def delete(self, table: str, **kwargs: dict) -> None:
-        conn = self.connect()
-        cur = conn.cursor()
-
-        cur.execute(f'DELETE FROM "{table}" WHERE id = {kwargs["id"]}')
-
-        conn.commit()
-        cur.close()
-        conn.close()
+        return row

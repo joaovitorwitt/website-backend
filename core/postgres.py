@@ -18,6 +18,7 @@ CONTENT_COLUMNS = (
     'description',
     'content',
     'image_url',
+    'repo_url',
     'tags',
     'created_at',
 )

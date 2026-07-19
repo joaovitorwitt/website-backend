@@ -23,14 +23,16 @@ from core.postgres import build_conninfo  # noqa: E402
 SOURCE_FORMAT = '%Y%m%d T%H:%M:%S'
 
 UPSERT = """
-INSERT INTO content (kind, title, slug, description, content, image_url, tags, created_at)
+INSERT INTO content (kind, title, slug, description, content, image_url, repo_url,
+                     tags, created_at)
 VALUES (%(kind)s, %(title)s, %(slug)s, %(description)s, %(content)s,
-        %(image_url)s, %(tags)s, %(created_at)s)
+        %(image_url)s, %(repo_url)s, %(tags)s, %(created_at)s)
 ON CONFLICT (kind, slug) DO UPDATE SET
     title       = EXCLUDED.title,
     description = EXCLUDED.description,
     content     = EXCLUDED.content,
     image_url   = EXCLUDED.image_url,
+    repo_url    = EXCLUDED.repo_url,
     tags        = EXCLUDED.tags,
     created_at  = EXCLUDED.created_at
 RETURNING id, (xmax = 0) AS inserted
@@ -63,13 +65,20 @@ def to_row(record: dict, kind: str) -> dict:
     if missing:
         raise ValueError(f'record {record.get("id")!r} missing {missing}')
 
+    # In the project export `Content` holds a repository link rather than a
+    # body, so it is routed to repo_url and `content` is left empty for a
+    # write-up later. Articles keep their HTML in `content`.
+    body = record.get('Content') or ''
+    is_link = body.startswith(('http://', 'https://'))
+
     return {
         'kind': kind,
         'title': record['Title'],
         'slug': record['url_title'],
         'description': record.get('Description') or '',
-        'content': record.get('Content') or '',
+        'content': '' if is_link else body,
         'image_url': record.get('image_url') or None,
+        'repo_url': body if is_link else None,
         'tags': parse_tags(record.get('tags')),
         'created_at': datetime.strptime(record['created_at'], SOURCE_FORMAT),
     }
